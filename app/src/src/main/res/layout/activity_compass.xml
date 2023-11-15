@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.kt.maps.sdk.MapView
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <LinearLayout android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="13dp"
+            android:padding="15dp"
+            android:background="@drawable/basic_button_shape">
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/compass_enable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/compass_enable"
+                android:checked="true"
+                app:switchPadding="10dp"/>
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/compass_center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="@string/compass_center"
+                app:switchPadding="10dp"/>
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/compass_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="@string/compass_margin"
+                app:switchPadding="10dp"/>
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/compass_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/compass_image"
+                android:checked="false"
+                app:switchPadding="10dp"/>
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/compass_alpha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="@string/compass_alpha"
+                app:switchPadding="10dp"/>
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/compass_toast"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="@string/compass_click_toast"
+                app:switchPadding="10dp"/>
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+

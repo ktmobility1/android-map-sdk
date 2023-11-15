@@ -1,0 +1,8 @@
+<selector
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:state_pressed="true"
+        android:drawable="@drawable/tkl_map_1_tap_bt_co_normal" />
+    <item
+        android:drawable="@drawable/tkl_map_1_tap_bt_co_press" />
+</selector>

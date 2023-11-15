@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="activity"
+                  type="com.kt.maps.sample.example.interaction.DoubleClickZoomHandlerActivity"/>
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/activity_double_click_zoom"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <com.kt.maps.sdk.MapView
+                android:id="@+id/map"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintTop_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+        <LinearLayout android:layout_height="wrap_content"
+                      android:layout_width="wrap_content"
+                      app:layout_constraintStart_toStartOf="parent"
+                      app:layout_constraintTop_toTopOf="parent"
+                      android:layout_marginStart="20dp"
+                      android:layout_marginTop="13dp"
+                      android:padding="15dp"
+                        android:background="@drawable/basic_button_shape">
+
+                <TextView
+                        android:id="@+id/zoom_level_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+
