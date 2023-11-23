@@ -6,7 +6,7 @@ import com.kt.maps.geometry.LngLat
 import com.kt.maps.sample.BaseActivity
 import com.kt.maps.sample.R
 import com.kt.maps.sample.databinding.ActivityRandomCameraBinding
-import com.kt.maps.sample.ui.common.showToast
+import com.kt.maps.sample.ui.common.showSnackbar
 import com.kt.maps.sdk.KtMap
 import com.kt.maps.sdk.MapView
 import com.kt.maps.sdk.OnMapReadyCallback
@@ -14,28 +14,29 @@ import com.kt.maps.sdk.OnMapReadyCallback
 class RandomCameraActivity :
     BaseActivity<ActivityRandomCameraBinding>(R.layout.activity_random_camera), OnMapReadyCallback {
 
-    private lateinit var mMap: KtMap
+    private lateinit var map: KtMap
     private lateinit var mapView: MapView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mapView = binding.map
-        mapView.onCreate(savedInstanceState)
-        mapView.getMapAsync(this)
+        mapView = binding.map.apply {
+            onCreate(savedInstanceState)
+            getMapAsync(this@RandomCameraActivity)
+        }
     }
 
     override fun onMapReady(ktmap: KtMap) {
-        mMap = ktmap
+        map = ktmap
 
         // 줌 변경 버튼 클릭 핸들러
         binding.buttonCameraZoom.setOnClickListener {
             val zoom = random(6.0, 20.0) // 6과 20 사이 랜덤 숫자 생성
 
-            mMap.easeTo(
+            map.easeTo(
                 cameraOptions = CameraPositionOptions().zoom(zoom),
                 duration = 3000
             )
-            baseContext.showToast(R.string.changed_camera_zoom, zoom)
+            mapView.showSnackbar(R.string.changed_camera_zoom, zoom)
         }
 
         // 중심점  변경 버튼 클릭 핸들러
@@ -43,9 +44,9 @@ class RandomCameraActivity :
             val lng = random(127.0, 128.0) // 경도 - 127과 128 사이 랜덤 숫자 생성
             val lat = random(35.0, 37.0) // 위도 - 35와 37 사이 랜덤 숫자 생성
 
-            mMap.jumpTo(CameraPositionOptions().lngLat(LngLat(latitude = lat, longitude = lng)))
+            map.jumpTo(CameraPositionOptions().lngLat(LngLat(latitude = lat, longitude = lng)))
 
-            baseContext.showToast(R.string.changed_camera_center, lat, lng)
+            mapView.showSnackbar(R.string.changed_camera_center, lat, lng)
         }
 
     }

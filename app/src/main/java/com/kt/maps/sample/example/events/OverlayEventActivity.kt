@@ -10,7 +10,7 @@ import com.kt.maps.overlay.polyline.PolylineOverlayOptions
 import com.kt.maps.sample.BaseActivity
 import com.kt.maps.sample.R
 import com.kt.maps.sample.databinding.ActivityOverlayEventBinding
-import com.kt.maps.sample.ui.common.showToast
+import com.kt.maps.sample.ui.common.showSnackbar
 import com.kt.maps.sdk.KtMap
 import com.kt.maps.sdk.MapView
 import com.kt.maps.sdk.OnMapReadyCallback
@@ -19,21 +19,35 @@ class OverlayEventActivity :
     BaseActivity<ActivityOverlayEventBinding>(R.layout.activity_overlay_event),
     OnMapReadyCallback {
 
+    companion object {
+        private val MARKER_POSITION = LngLat(longitude = 126.97687, latitude = 37.57581)
+        private val POLYGON_OVERLAY_LNGLATS = listOf(
+            LngLat(latitude = 37.57217, longitude = 126.98077),
+            LngLat(latitude = 37.56834, longitude = 126.98226),
+            LngLat(latitude = 37.57310, longitude = 126.98548),
+        )
+        private val POLYLINE_OVERLAY_LNGLATS = listOf(
+            LngLat(latitude = 37.57069, longitude = 126.97365),
+            LngLat(latitude = 37.56897, longitude = 126.97136),
+            LngLat(latitude = 37.56872, longitude = 126.97534),
+            LngLat(latitude = 37.56742, longitude = 126.97164),
+        )
+    }
+
     private lateinit var map: KtMap
     private lateinit var mapView: MapView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mapView = binding.map
-        mapView.onCreate(savedInstanceState)
-        mapView.getMapAsync(this)
+        mapView = binding.map.apply {
+            onCreate(savedInstanceState)
+            getMapAsync(this@OverlayEventActivity)
+        }
     }
 
     override fun onMapReady(ktmap: KtMap) {
-        map = ktmap
-
-        map.apply {
+        map = ktmap.apply {
             jumpTo(
                 cameraOptions = CameraPositionOptions(
                     zoom = 14.0,
@@ -52,7 +66,7 @@ class OverlayEventActivity :
 
             addOverlay(
                 PolylineOverlayOptions.Builder().apply {
-                    coords(POLYLINE_OVERLAY_COORDS)
+                    lngLats(POLYLINE_OVERLAY_LNGLATS)
                     color(Color.GREEN)
                     width(10f)
                 }.build()
@@ -60,55 +74,37 @@ class OverlayEventActivity :
 
             addOverlay(
                 PolygonOverlayOptions.Builder().apply {
-                    coords(POLYGON_OVERLAY_COORDS)
+                    lngLats(POLYGON_OVERLAY_LNGLATS)
                     color(Color.BLUE)
                 }.build()
             )
 
-            setOnMarkerClickListener {
-                showToast("Marker clicked (ID : ${it.id})")
+            setOnMarkerTapListener {
+                mapView.showSnackbar("Marker taped (ID : ${it.id})")
                 false
             }
 
-            setOnPolylineOverlayClickListener {
-                showToast("PolylineOverlay clicked (ID : ${it.id})")
+            setOnPolylineOverlayTapListener {
+                mapView.showSnackbar("PolylineOverlay taped (ID : ${it.id})")
             }
 
-            setOnPolygonOverlayClickListener {
-                showToast("PolygonOverlay clicked (ID : ${it.id})")
+            setOnPolygonOverlayTapListener {
+                mapView.showSnackbar("PolygonOverlay taped (ID : ${it.id})")
             }
 
-            setOnInfoWindowClickListener {
-                showToast("InfoWindow Clicked (ID : ${it.id})")
+            setOnInfoWindowTapListener {
+                mapView.showSnackbar("InfoWindow Taped (ID : ${it.id})")
                 false
             }
 
             setOnInfoWindowLongClickListener {
-                showToast("InfoWindow Long Clicked (ID : ${it.id})")
+                mapView.showSnackbar("InfoWindow Long Clicked (ID : ${it.id})")
             }
 
             setOnInfoWindowCloseListener {
-                showToast("InfoWindow Closed (ID : ${it.id})")
+                mapView.showSnackbar("InfoWindow Closed (ID : ${it.id})")
             }
-
         }
-
-    }
-
-    companion object {
-        private val MARKER_POSITION = LngLat(longitude = 126.97687, latitude = 37.57581)
-        private val POLYGON_OVERLAY_COORDS = listOf(
-            LngLat(latitude = 37.57217, longitude = 126.98077),
-            LngLat(latitude = 37.56834, longitude = 126.98226),
-            LngLat(latitude = 37.57310, longitude = 126.98548),
-        )
-        private val POLYLINE_OVERLAY_COORDS = listOf(
-            LngLat(latitude = 37.57069, longitude = 126.97365),
-            LngLat(latitude = 37.56897, longitude = 126.97136),
-            LngLat(latitude = 37.56872, longitude = 126.97534),
-            LngLat(latitude = 37.56742, longitude = 126.97164),
-        )
-
     }
 
     override fun onStart() {

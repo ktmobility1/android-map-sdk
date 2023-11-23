@@ -3,9 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:ignore="MissingDefaultResource">
-
     <data>
-
         <variable
             name="activity"
             type="com.kt.maps.sample.example.style.BuildingActivity" />
@@ -111,6 +109,7 @@
                     app:layout_constraintStart_toEndOf="@id/height_slider" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <!-- opacity -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

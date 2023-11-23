@@ -16,14 +16,16 @@ class NormalMapActivity : BaseActivity<ActivityNormalMapBinding>(R.layout.activi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mapView = binding.map
-        mapView.onCreate(savedInstanceState)
-        mapView.getMapAsync(this)
+        mapView = binding.map.apply {
+            onCreate(savedInstanceState)
+            getMapAsync(this@NormalMapActivity)
+        }
     }
 
     override fun onMapReady(ktmap: KtMap) {
-        map = ktmap
-        map.setMapType(KtMapOptions.MapType.Normal)
+        map = ktmap.apply {
+            setMapType(KtMapOptions.MapType.STREETS)
+        }
     }
 
     override fun onStart() {

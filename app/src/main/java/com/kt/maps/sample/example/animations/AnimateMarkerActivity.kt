@@ -52,7 +52,7 @@ class AnimateMarkerActivity :
         }
     }
 
-    override fun onTap(point: PointF, coord: LngLat): Boolean {
+    override fun onTap(point: PointF, lngLat: LngLat): Boolean {
         animator?.let {
             if (it.isStarted) {
                 currentPoint = it.animatedValue as LngLat
@@ -68,7 +68,7 @@ class AnimateMarkerActivity :
         }
 
         animator = ValueAnimator().apply {
-            setObjectValues(currentPoint, coord)
+            setObjectValues(currentPoint, lngLat)
             setEvaluator(pointEvaluator)
             addUpdateListener {
                 val updateValue = it.animatedValue as LngLat
@@ -78,7 +78,7 @@ class AnimateMarkerActivity :
             start()
         }
 
-        currentPoint = coord
+        currentPoint = lngLat
 
         return true
     }

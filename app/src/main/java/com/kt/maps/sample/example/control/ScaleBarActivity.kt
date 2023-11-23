@@ -28,15 +28,15 @@ class ScaleBarActivity : BaseActivity<ActivityScaleBarBinding>(R.layout.activity
     }
 
     override fun onMapReady(ktmap: KtMap) {
-        map = ktmap
-
-        //only scaleBar enable
-        map.compass.enabled = false
-        map.zoomControls.enabled = false
-        map.logo.enabled = false
-        map.scaleBar.enabled = true
-        map.currentLocation.enabled = false
-        map.panControls.enabled = false
+        map = ktmap.apply {
+            //only scaleBar enable
+            compass.enabled = false
+            zoomControls.enabled = false
+            logo.enabled = false
+            scaleBar.enabled = true
+            currentLocation.enabled = false
+            panControls.enabled = false
+        }
 
         val defaultBottomMargin = map.scaleBar.marginBottom
         val defaultRightMargin = map.scaleBar.marginRight

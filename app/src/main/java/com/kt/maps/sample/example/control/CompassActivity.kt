@@ -2,7 +2,6 @@ package com.kt.maps.sample.example.control
 
 import android.os.Bundle
 import android.view.Gravity
-import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import com.kt.maps.control.compass.compass
 import com.kt.maps.control.location.currentLocation
@@ -10,43 +9,45 @@ import com.kt.maps.control.logo.logo
 import com.kt.maps.control.pan.panControls
 import com.kt.maps.control.scale.scaleBar
 import com.kt.maps.control.zoom.zoomControls
-import com.kt.maps.controls.OnCompassClickListener
+import com.kt.maps.controls.OnCompassTapListener
 import com.kt.maps.sample.BaseActivity
 import com.kt.maps.sample.R
 import com.kt.maps.sample.databinding.ActivityCompassBinding
+import com.kt.maps.sample.ui.common.showSnackbar
 import com.kt.maps.sdk.KtMap
+import com.kt.maps.sdk.MapView
 import com.kt.maps.sdk.OnMapReadyCallback
 
 class CompassActivity : BaseActivity<ActivityCompassBinding>(R.layout.activity_compass),
     OnMapReadyCallback {
 
     private lateinit var map: KtMap
+    private lateinit var mapView: MapView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding.map.getMapAsync(this)
+        mapView = binding.map.apply {
+            onCreate(savedInstanceState)
+            getMapAsync(this@CompassActivity)
+        }
     }
 
     override fun onMapReady(ktmap: KtMap) {
-        map = ktmap
-
-        //only compass enable
-        map.compass.enabled = true
-        map.zoomControls.enabled = false
-        map.logo.enabled = false
-        map.scaleBar.enabled = false
-        map.currentLocation.enabled = false
-        map.panControls.enabled = false
-
-        val defaultMargin = map.compass.marginTop
-        val onCompassClick = OnCompassClickListener {
-            Toast.makeText(
-                this@CompassActivity,
-                R.string.compass_click_toast,
-                Toast.LENGTH_SHORT
-            ).show()
+        map = ktmap.apply {
+            //only compass enable
+            compass.enabled = true
+            zoomControls.enabled = false
+            logo.enabled = false
+            scaleBar.enabled = false
+            currentLocation.enabled = false
+            panControls.enabled = false
         }
 
+        val defaultMargin = map.compass.marginTop
+        val onCompassTap = OnCompassTapListener {
+            mapView.showSnackbar(R.string.compass_tap)
+        }
 
         binding.compassEnable.setOnCheckedChangeListener { _, isChecked ->
             map.compass.enabled = isChecked
@@ -59,11 +60,11 @@ class CompassActivity : BaseActivity<ActivityCompassBinding>(R.layout.activity_c
             }
         }
         binding.compassMargin.setOnCheckedChangeListener { _, isChecked ->
-            val margin = if (isChecked) {
+            val margin = if (isChecked)
                 defaultMargin * 5
-            } else {
+            else
                 defaultMargin
-            }
+
             map.compass.run {
                 marginTop = margin
                 marginBottom = margin
@@ -72,27 +73,52 @@ class CompassActivity : BaseActivity<ActivityCompassBinding>(R.layout.activity_c
             }
         }
         binding.compassImage.setOnCheckedChangeListener { _, isChecked ->
-            val drawable = if (isChecked) {
+            val drawable = if (isChecked)
                 AppCompatResources.getDrawable(this@CompassActivity, R.drawable.btn_compass_reverse)
-
-            } else {
+            else
                 AppCompatResources.getDrawable(this@CompassActivity, R.drawable.btn_compass)
-            }
+
             map.compass.compassIcon = drawable!!
         }
         binding.compassAlpha.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                map.compass.opacity = 0.5f
-            } else {
-                map.compass.opacity = 1f
-            }
+            map.compass.opacity = if (isChecked) 0.5f else 1f
         }
-        binding.compassToast.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                map.compass.addOnCompassClickListener(onCompassClick)
-            } else {
-                map.compass.removeOnCompassClickListener(onCompassClick)
-            }
+        binding.compassTap.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked)
+                map.compass.addOnCompassTapListener(onCompassTap)
+            else
+                map.compass.removeOnCompassTapListener(onCompassTap)
+
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mapView.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mapView.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mapView.onPause()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mapView.onStop()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        mapView.onLowMemory()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mapView.onDestroy()
     }
 }

@@ -56,11 +56,11 @@
                 android:text="@string/compass_alpha"
                 app:switchPadding="10dp"/>
             <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/compass_toast"
+                android:id="@+id/compass_tap"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:checked="false"
-                android:text="@string/compass_click_toast"
+                android:text="@string/compass_tap"
                 app:switchPadding="10dp"/>
         </LinearLayout>
 

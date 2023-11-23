@@ -49,6 +49,16 @@
                 android:exported="false"
                 android:label="@string/satellite_map_activity_label"/>
         <activity
+            android:name=".example.base.MapTypeActivity"
+            android:description="@string/maptype_activity_description"
+            android:exported="false"
+            android:label="@string/maptype_activity_label"/>
+        <activity
+                android:name=".example.base.MapFragmentActivity"
+                android:description="@string/fragment_activity_description"
+                android:exported="false"
+                android:label="@string/fragment_activity_label"/>
+        <activity
                 android:name=".example.interaction.MinMaxZoomActivity"
                 android:description="@string/min_max_zoom_activity_description"
                 android:exported="false"
@@ -64,10 +74,10 @@
                 android:exported="false"
                 android:label="@string/map_extent_label"/>
         <activity
-                android:name=".example.interaction.DoubleClickZoomHandlerActivity"
-                android:description="@string/double_click_zoom_handler_description"
+                android:name=".example.interaction.DoubleTapZoomHandlerActivity"
+                android:description="@string/double_tap_zoom_handler_description"
                 android:exported="false"
-                android:label="@string/double_click_zoom_handler_label"/>
+                android:label="@string/double_tap_zoom_handler_label"/>
         <activity
                 android:name=".example.interaction.ToggleGestureSettingsActivity"
                 android:description="@string/toggle_gesture_settings_activity_description"
@@ -84,7 +94,7 @@
                 android:exported="false"
                 android:label="@string/basic_camera__activity_label"/>
         <activity
-            android:name=".example.camera.AnimatedCameraActivity"
+            android:name=".example.camera.MoveCameraActivity"
             android:description="@string/animated_camera_activity_description"
             android:exported="false"
             android:label="@string/animated_camera_activity_label" />
@@ -124,12 +134,6 @@
                 android:description="@string/add_marker_activity_description"
                 android:exported="false"
                 android:label="@string/add_marker_activity_label"/>
-        <activity
-                android:name=".example.overlay.AddInfoWindowActivity"
-                android:description="@string/add_infowindow_activity_description"
-                android:exported="false"
-                android:label="@string/add_infowindow_activity_label"/>
-
 
         <activity
                 android:name=".example.overlay.InfoWindowActivity"
@@ -157,10 +161,10 @@
                 android:exported="false"
                 android:label="@string/path_activity_label"/>
         <activity
-                android:name=".example.events.MapClickEventActivity"
-                android:description="@string/map_click_event_activity_description"
+                android:name=".example.events.MapTapEventActivity"
+                android:description="@string/map_tap_event_activity_description"
                 android:exported="false"
-                android:label="@string/map_click_event_activity_label"/>
+                android:label="@string/map_tap_event_activity_label"/>
         <activity
                 android:name=".example.events.ZoomGestureEventActivity"
                 android:description="@string/zoom_gesture_event_activity_description"
@@ -182,15 +186,15 @@
                 android:exported="false"
                 android:label="@string/background_layer_activity_label"/>
         <activity
-                android:name=".example.layer.PolygonLayerActivity"
-                android:description="@string/polygon_layer_activity_description"
+                android:name=".example.layer.FillLayerActivity"
+                android:description="@string/fill_layer_activity_description"
                 android:exported="false"
-                android:label="@string/polygon_layer_activity_label"/>
+                android:label="@string/fill_layer_activity_label"/>
         <activity
-                android:name=".example.layer.PolygonLayerRemoteActivity"
-                android:description="@string/polygon_layer_remote_activity_description"
+                android:name=".example.layer.FillLayerRemoteActivity"
+                android:description="@string/fill_layer_remote_activity_description"
                 android:exported="false"
-                android:label="@string/polygon_layer_remote_activity_label"/>
+                android:label="@string/fill_layer_remote_activity_label"/>
         <activity
                 android:name=".example.layer.LineLayerVectorSourceActivity"
                 android:description="@string/line_layer_remote_activity_description"
@@ -228,15 +232,15 @@
                 android:exported="false"
                 android:label="@string/line_animate_activity_label" />
         <activity
-            android:name=".example.style.QueryFeaturesActivity"
+            android:name=".example.style.QueryRenderedFeaturesActivity"
             android:description="@string/query_features_activity_description"
             android:exported="false"
             android:label="@string/query_features_activity_label" />
         <activity
-            android:name=".example.style.PatternPolygonLayerActivity"
-            android:description="@string/query_features_activity_description"
+            android:name=".example.style.PatternFillLayerActivity"
+            android:description="@string/pattern_filllayer_activity_description"
             android:exported="false"
-            android:label="@string/query_features_activity_label" />
+            android:label="@string/pattern_filllayer_activity_label" />
         <activity
             android:name=".example.style.BuildingActivity"
             android:description="@string/building_activity_description"

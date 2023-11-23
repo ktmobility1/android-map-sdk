@@ -43,7 +43,7 @@ class MapExtentActivity : BaseActivity<ActivityMapExtentBinding>(R.layout.activi
 
             addOverlay(
                 PolylineOverlayOptions.Builder().apply {
-                    coords(MAP_EXTENT_POLYLINE)
+                    lngLats(MAP_EXTENT_POLYLINE)
                     color(Color.BLACK)
                     width(6f)
                 }.build()

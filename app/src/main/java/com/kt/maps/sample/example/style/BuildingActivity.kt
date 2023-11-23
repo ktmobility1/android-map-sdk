@@ -33,7 +33,7 @@ class BuildingActivity :
                 bearing = 90.0,
                 zoom = 16.0,
                 // 잠실역
-                lngLat = LngLat(127.10016448695572,37.51329170850403)
+                lngLat = LngLat(127.10016448695572, 37.51329170850403)
             )
         )
 
@@ -79,7 +79,7 @@ class BuildingActivity :
             heightSlider.value = map.buildingLayerGroup.heightRatio
             heightSliderValue.text = map.buildingLayerGroup.heightRatio.toString()
 
-            // 건물면 opacity
+            // 건물면 투명도
             opacitySlider.value = map.buildingLayerGroup.opacity
             opacitySliderValue.text = map.buildingLayerGroup.opacity.toString()
 

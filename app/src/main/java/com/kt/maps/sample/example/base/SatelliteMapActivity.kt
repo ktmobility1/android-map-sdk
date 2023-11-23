@@ -21,6 +21,6 @@ class SatelliteMapActivity : BaseActivity<ActivityNormalMapBinding>(R.layout.act
 
     override fun onMapReady(ktmap: KtMap) {
         map = ktmap
-        map.setMapType(KtMapOptions.MapType.Satellite)
+        map.setMapType(KtMapOptions.MapType.SATELLITE)
     }
 }

@@ -3,20 +3,153 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:ignore="MissingDefaultResource">
+
     <data>
-        <variable name="activity"
-            type="com.kt.maps.sample.example.layer.RasterLayerActivity"/>
+        <variable
+            name="activity"
+            type="com.kt.maps.sample.example.layer.RasterLayerActivity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/activity_background_layer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <com.kt.maps.sdk.MapView
             android:id="@+id/map"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
+            android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/basic_button_shape"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="13dp"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- opacity -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/opacity_text"
+                android:textSize="15dp"
+                android:textColor="@color/dark_gray"
+                android:layout_marginTop="6dp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/opacity_slider"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                style="@style/SliderStyle"
+                app:layout_constraintTop_toTopOf="parent"
+                android:valueFrom="0.0"
+                android:valueTo="1.0"
+                android:stepSize="0.1" />
+
+
+            <!--  brightness_min -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/brightness_min_text"
+                android:textSize="15dp"
+                android:textColor="@color/dark_gray"
+                android:layout_marginTop="6dp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/brightness_min_slider"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                style="@style/SliderStyle"
+                app:layout_constraintTop_toTopOf="parent"
+                android:valueFrom="0.0"
+                android:valueTo="1.0"
+                android:stepSize="0.1" />
+
+            <!--  brightness_max -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/brightness_max_text"
+                android:textSize="15dp"
+                android:textColor="@color/dark_gray"
+                android:layout_marginTop="6dp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/brightness_max_slider"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                style="@style/SliderStyle"
+                app:layout_constraintTop_toTopOf="parent"
+                android:valueFrom="0.0"
+                android:valueTo="1.0"
+                android:stepSize="0.1" />
+
+            <!--  contrast -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/contrast_text"
+                android:textSize="15dp"
+                android:textColor="@color/dark_gray"
+                android:layout_marginTop="6dp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/contrast_slider"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                style="@style/SliderStyle"
+                app:layout_constraintTop_toTopOf="parent"
+                android:valueFrom="0.0"
+                android:valueTo="1.0"
+                android:stepSize="0.1" />
+
+            <!--  saturation -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/saturation_text"
+                android:textSize="15dp"
+                android:textColor="@color/dark_gray"
+                android:layout_marginTop="6dp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/saturation_slider"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                style="@style/SliderStyle"
+                app:layout_constraintTop_toTopOf="parent"
+                android:valueFrom="0.0"
+                android:valueTo="1.0"
+                android:stepSize="0.1" />
+
+            <!--  hue-rotate -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hue_rotate_text"
+                android:textSize="15dp"
+                android:textColor="@color/dark_gray"
+                android:layout_marginTop="6dp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/hue_rotate_slider"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                style="@style/SliderStyle"
+                app:layout_constraintTop_toTopOf="parent"
+                android:valueFrom="0"
+                android:valueTo="359"
+                android:stepSize="1" />
+
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

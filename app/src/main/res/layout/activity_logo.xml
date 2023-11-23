@@ -40,11 +40,11 @@
                     android:text="@string/logo_margin"
                     app:switchPadding="10dp"/>
             <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/logo_click_toast"
+                    android:id="@+id/logo_tap"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:checked="false"
-                    android:text="@string/logo_click_toast"
+                    android:text="@string/logo_tap"
                     app:switchPadding="10dp"/>
         </LinearLayout>
 

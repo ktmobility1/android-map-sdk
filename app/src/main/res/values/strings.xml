@@ -5,6 +5,10 @@
     <string name="normal_map_activity_description">sample about normal map</string>
     <string name="satellite_map_activity_label">Satellite Map</string>
     <string name="satellite_map_activity_description">sample about satellite map</string>
+    <string name="maptype_activity_label">MapType</string>
+    <string name="maptype_activity_description">choose MapType</string>
+    <string name="fragment_activity_label">fragment activity</string>
+    <string name="fragment_activity_description">get fragment activity</string>
     <string name="marker_activity_label">Marker</string>
     <string name="marker_activity_description">Marker on map</string>
     <string name="add_marker_activity_label">Add Marker</string>
@@ -24,14 +28,14 @@
     <string name="path_activity_description">PathOverlay on map</string>
     <string name="basic_camera__activity_label">Change map center, zoom</string>
     <string name="random_cameara_description">Change map center, zoom</string>
-    <string name="animated_camera_activity_label">easeTo, flyTo Camera </string>
-    <string name="animated_camera_activity_description">easeTo, flyTo Camera animation</string>
+    <string name="animated_camera_activity_label">Move Camera </string>
+    <string name="animated_camera_activity_description">jumpTp, easeTo, flyTo Camera animation</string>
     <string name="camera_fitbounds_activity_label">Camera fitBounds</string>
     <string name="camera_fitbounds_activity_description">Camera LngLatBounds</string>
     <string name="gesture_camera_activity_label">Change map zoom, pitch, rotate</string>
-    <string name="gesture_camera_description">Change map zoom, pitch, rotate</string>
-    <string name="map_click_event_activity_label">Map Click Event</string>
-    <string name="map_click_event_activity_description">click and long click events on map activity</string>
+    <string name="gesture_camera_description">Change map zoom, pitch, bearing</string>
+    <string name="map_tap_event_activity_label">Map Tap Event</string>
+    <string name="map_tap_event_activity_description">Tap and Longpress events on Map</string>
     <string name="map_extent_label">Map Extent</string>
     <string name="map_extent_description">Map Extent</string>
     <string name="min_max_zoom_activity_label">Min/Max Zoom</string>
@@ -39,10 +43,8 @@
     <string name="max_pitch_activity_label">Max Pitch</string>
     <string name="max_pitch_activity_description">Max Pitch</string>
     <string name="zoom_gesture_event_activity_label">Map Zoom Event</string>
-    <string name="zoom_gesture_event_activity_description">Handling zoom gesture using double tap, two finger tap and
-        drag
-    </string>
-    <string name="all_gesture_event_activity_label">Move,Rotate,Pitch,Scale Gesture Events</string>
+    <string name="zoom_gesture_event_activity_description">Handling zoom gesture using DoubleTap, TwoFingerTap</string>
+    <string name="all_gesture_event_activity_label">Pan,Rotate,Pitch,Scale Gesture Events</string>
     <string name="all_gesture_event_activity_description">Handling move,rotate,pitch and scale gesture events on map
     </string>
     <string name="overlay_event_activity_label">Overlay Events</string>
@@ -51,8 +53,8 @@
     <string name="toggle_gesture_settings_activity_description">Handling gesture settings on map using toggle button
     </string>
 
-    <string name="double_click_zoom_handler_label">Double Click Zoom Handler</string>
-    <string name="double_click_zoom_handler_description">Handling double click zoom using toggle button</string>
+    <string name="double_tap_zoom_handler_label">Double Tap Zoom Handler</string>
+    <string name="double_tap_zoom_handler_description">Handling double tap zoom using toggle button</string>
 
     <string name="gesture_interactive_label">Gesture Interactive</string>
     <string name="gesture_interactive_description">Change gesture interactive</string>
@@ -60,11 +62,11 @@
     <string name="background_layer_activity_label">BackgroundLayer</string>
     <string name="background_layer_activity_description">BackgroundLayer</string>
 
-    <string name="polygon_layer_activity_label">PolygonLayer</string>
-    <string name="polygon_layer_activity_description">PolygonLayer</string>
+    <string name="fill_layer_activity_label">FillLayer</string>
+    <string name="fill_layer_activity_description">FillLayer</string>
 
-    <string name="polygon_layer_remote_activity_label">PolygonLayer and Remote GeoJSONSource</string>
-    <string name="polygon_layer_remote_activity_description">PolygonLayer and Remote GeoJSONSource</string>
+    <string name="fill_layer_remote_activity_label">FillLayer and Remote GeoJSONSource</string>
+    <string name="fill_layer_remote_activity_description">FillLayer and Remote GeoJSONSource</string>
 
     <string name="line_layer_remote_activity_label">LineLayer and VectorSource</string>
     <string name="line_layer_remote_activity_description">LineLayer and VectorSource</string>
@@ -85,7 +87,7 @@
     <string name="zoom_controls_activity_description">Zoom In/Out With Button</string>
 
     <string name="logo_activity_label">Logo</string>
-    <string name="logo_activity_description">Move KT Logo and Click Event</string>
+    <string name="logo_activity_description">Move KT Logo and Tap Event</string>
 
     <string name="scale_bar_activity_label">ScaleBar</string>
     <string name="scale_bar_activity_description">Scale Change with Zoom Ratio</string>
@@ -95,50 +97,57 @@
 
     <!-- gesture -->
     <string name="zoom_text">Zoom</string>
-    <string name="double_click_text">Double Click</string>
+    <string name="double_tap_text">Double Tap</string>
     <string name="rotate_text">Rotate</string>
-    <string name="scroll_text">Scroll</string>
-    <string name="horizontal_scroll_text">Horizontal Scroll</string>
+    <string name="pan_text">Pan</string>
+    <string name="horizontal_pan_text">Horizontal Pan</string>
     <string name="pitch_text">Pitch</string>
     <string name="fling_text">Fling</string>
-    <string name="move_text">Move</string>
     <string name="interactive_text">interactive</string>
 
     <!-- gesture camera -->
-    <string name="zoom_min_text">min/max zoom</string>
+    <string name="zoom_min_text">Zoom</string>
     <string name="zoom_min_value">6</string>
     <string name="zoom_max_value">21</string>
 
-    <string name="bearing_min_text">min/max bearing</string>
+    <string name="bearing_min_text">bearing</string>
     <string name="bearing_min_value">0</string>
     <string name="bearing_max_value">360</string>
 
-    <string name="pitch_min_text">min/max pitch</string>
+    <string name="pitch_min_text">pitch</string>
     <string name="pitch_min_value">0</string>
     <string name="pitch_max_value">63</string>
 
     <!-- event -->
-    <string name="format_map_click">지도 클릭\n(%1$.5f, %2$.5f)</string>
-    <string name="format_map_long_click">지도 롱 클릭\n(%1$.5f, %2$.5f)</string>
-    <string name="format_map_long_double_tap">지도 더블 탭\n(%1$.5f, %2$.5f)</string>
+    <string name="format_map_tap">Tap\nlngLat:(%1$.4f, %2$.4f),point(%3$.2f, %4$.2f)</string>
+    <string name="format_map_long_press">LongPress\nlngLat:(%1$.4f, %2$.4f),point(%3$.1f, %4$.2f)</string>
+    <string name="format_map_long_double_tap">DoubleTap\nlngLat:(%1$.4f, %2$.4f),point(%3$.2f, %4$.2f)</string>
 
     <string name="format_double">%.2f</string>
 
-    <string name="format_map_marker_click">마커 클릭\n(%1$.5f, %2$.5f)</string>
+    <string name="format_map_marker_tap">마커 Tap\n(%1$.5f, %2$.5f)</string>
 
     <string name="test_camera_start">카메라 시작</string>
     <string name="test_camera_move">카메라 움직임</string>
     <string name="test_camera_end">카메라 종료</string>
 
     <!-- camera -->
-    <string name="changed_camera_zoom">변경된 줌 레벨\n(%1$.5f)</string>
-    <string name="changed_camera_center">변경된 중심좌표\n(%1$.5f, %2$.5f)</string>
-    <string name="change_camera_zoom">줌 변경</string>
-    <string name="change_camera_center">중심점 변경</string>
-    <string name="camera_easeTo">easeTo</string>
-    <string name="camera_flyTo">flyTo</string>
-    <string name="fit_bounds_camera_busan">부산 영역</string>
+    <string name="changed_camera_zoom">Zom level\n(%1$.5f)</string>
+    <string name="changed_camera_center">LngLat\n(%1$.5f, %2$.5f)</string>
+    <string name="change_camera_zoom">Change Zoom</string>
+    <string name="change_camera_center">Change LngLat</string>
+    <string name="camera_move">Move</string>
 
+    <string-array name="camera_animation_type_array">
+        <item>jumpTo</item>
+        <item>easeTo</item>
+        <item>flyTo</item>
+    </string-array>
+
+    <string-array name="fit_bounds_array">
+        <item>seoul</item>
+        <item>busan</item>
+    </string-array>
 
     <string-array name="interpolate_array">
         <item>AccelerateDecelerate</item>
@@ -159,7 +168,7 @@
     <string name="compass_margin">More margins</string>
     <string name="compass_image">Green image</string>
     <string name="compass_alpha">Alpha 50%</string>
-    <string name="compass_click_toast">Toast onClick</string>
+    <string name="compass_tap">Compass onTap</string>
 
     <!--    control - zoom controls -->
     <string name="zoom_controls_enable">Enabled</string>
@@ -173,8 +182,8 @@
 
     <!-- control - logo -->
     <string name="logo_top">Top</string>
+    <string name="logo_tap">Logo onTap</string>
     <string name="logo_margin">More margins</string>
-    <string name="logo_click_toast">Toast onClick</string>
 
     <!-- control - scale bar -->
     <string name="scale_bar_enable">Enabled</string>
@@ -198,7 +207,7 @@
     <string name="path">path</string>
     <string name="path_next">next</string>
     <string name="path_prev">prev</string>
-    <string name="path_color">change color</string>
+    <string name="path_color">color</string>
 
     <!-- Animations -->
     <string name="camera_animator_activity_label">Camera Animation</string>
@@ -214,8 +223,20 @@
     <string name="line_animate_activity_description">Animate a line</string>
 
     <!-- Styles -->
-    <string name="query_features_activity_label">Get features</string>
-    <string name="query_features_activity_description">longpress and get features</string>
+    <string name="query_features_activity_label">Get rendered features</string>
+    <string name="query_features_activity_description">Tap and get features</string>
+
+    <string name="saturation_text">saturation</string>
+    <string name="contrast_text">contrast</string>
+    <string name="brightness_min_text">brightness min</string>
+    <string name="brightness_max_text">brightness max</string>
+    <string name="hue_rotate_text">hue rotate</string>
+
+    <string name="icon_style_text">Icon style</string>
+    <string name="text_style_text">Text style</string>
+    <string name="size_text">Size</string>
+    <string name="overlap_text">Overlap</string>
+    <string name="ignore_placement_text">Ignore placement</string>
 
     <!-- building -->
     <string name="building_activity_label">BuildingLayerGroup</string>
@@ -223,15 +244,17 @@
 
     <string name="building_enable">Enabled</string>
 
-    <string name="height_text">min/max height</string>
+    <string name="height_text">height ratio</string>
     <string name="height_min_value">0</string>
     <string name="height_max_value">1.0</string>
 
-    <string name="opacity_text">min/max opacity</string>
+    <string name="opacity_text">opacity</string>
     <string name="opacity_min_value">0</string>
     <string name="opacity_max_value">1.0</string>
 
-    <string name="color_text">RGB</string>
+    <string name="color_text">color(RGB)</string>
+
+    <string name="outline_color_text">outline color(RGB)</string>
 
     <string name="color_r_min_value">0</string>
     <string name="color_r_max_value">255</string>
@@ -242,6 +265,22 @@
     <string name="color_b_min_value">0</string>
     <string name="color_b_max_value">255</string>
 
+    <string name="width_text">width</string>
+
     <!-- Activity Need Permission -->
     <string name="activity_need_permission">ACTIVITY_NEED_PERMISSION</string>
+
+    <string name="polygon_overlay_activity_create">만들기</string>
+    <string name="polygon_overlay_activity_remove">지우기</string>
+    <string name="polygon_overlay_activity_new">새 그룹</string>
+    <string name="polygon_overlay_activity_outer">outer</string>
+    <string name="polygon_overlay_activity_inner">inner</string>
+
+    <string name="polyline_overlay_activity_initial">초기화</string>
+
+    <string name="marker_caption_string">마커 캡션</string>
+
+    <string name="pattern_filllayer_activity_description">FillLayer</string>
+    <string name="pattern_filllayer_activity_label">Pattern FillLayer</string>
+
 </resources>

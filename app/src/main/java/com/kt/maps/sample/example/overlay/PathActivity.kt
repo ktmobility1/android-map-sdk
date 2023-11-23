@@ -2,6 +2,7 @@ package com.kt.maps.sample.example.overlay
 
 import android.graphics.Color
 import android.os.Bundle
+import androidx.appcompat.content.res.AppCompatResources
 import com.kt.maps.camera.CameraPositionOptions
 import com.kt.maps.extensions.path.ArrowOverlay
 import com.kt.maps.extensions.path.ArrowOverlayOptions
@@ -49,7 +50,12 @@ class PathActivity : BaseActivity<ActivityPathBinding>(R.layout.activity_path),
                     width(16)
                     strokeColor(Color.BLACK)
                     strokeWidth(2)
-                    pattern(getDrawable(R.drawable.path_pattern))
+                    pattern(
+                        AppCompatResources.getDrawable(
+                            this@PathActivity,
+                            R.drawable.path_pattern
+                        )
+                    )
                 }.build()
             )
         }
@@ -74,10 +80,14 @@ class PathActivity : BaseActivity<ActivityPathBinding>(R.layout.activity_path),
                 return@setOnClickListener
             updateArrowOverlay(index)
         }
+
+        binding.buttonPathChangeColor.setOnClickListener {
+            path?.linkColors(LINKS.map { randomColor(range = (Math.random() * COLOR_RANGE).toInt()) })
+        }
     }
 
     /**
-     *  화살표 Overlay 업데이트한다.
+     *  화살표 Overlay 변경
      *  @param index path index
      */
     private fun updateArrowOverlay(index: Int) {
@@ -87,7 +97,7 @@ class PathActivity : BaseActivity<ActivityPathBinding>(R.layout.activity_path),
 
         arrow = map.addArrowPathOverlay(
             ArrowOverlayOptions.Builder().apply {
-                coords(LINKS[index] + LINKS[index + 1])
+                lngLats(LINKS[index] + LINKS[index + 1])
                 color(Color.LTGRAY)
                 width(16)
                 strokeColor(Color.BLACK)
@@ -100,27 +110,27 @@ class PathActivity : BaseActivity<ActivityPathBinding>(R.layout.activity_path),
         )
     }
 
-    private fun click() {
-
-    }
-
     /**
      * @return @ColorInt
      */
-    private fun randomColor(): Int {
-        val num = (Math.random() * 5).toInt()
-
-        return when (num) {
+    private fun randomColor(range: Int = 4): Int {
+        return when ((Math.random() * range).toInt()) {
             0 -> Color.RED
             // orange
             1 -> Color.parseColor("#FFA500")
-            2 -> Color.YELLOW
-            3 -> Color.GREEN
-            else -> Color.LTGRAY
+            2 -> Color.GREEN
+            3 -> Color.YELLOW
+            4 -> Color.WHITE
+            5 -> Color.LTGRAY
+            6 -> Color.DKGRAY
+            7 -> Color.BLACK
+            else -> Color.GRAY
         }
     }
 
     companion object {
+        const val COLOR_RANGE = 8
+
         val LINKS = listOf(
             listOf(
                 LngLat(latitude = 37.55320682259445, longitude = 126.9727695192017),

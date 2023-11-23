@@ -21,34 +21,38 @@ class ToggleGestureSettingsActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mapView = binding.map
-        mapView.onCreate(savedInstanceState)
-        mapView.getMapAsync(this)
+        mapView = binding.map.apply {
+            onCreate(savedInstanceState)
+            getMapAsync(this@ToggleGestureSettingsActivity)
+        }
     }
 
     override fun onMapReady(ktmap: KtMap) {
-        map = ktmap
-        map.currentLocation.enabled = false
-        map.zoomControls.enabled = false
-
-        binding.zoomToggle.setOnCheckedChangeListener { _, isChecked ->
-            map.gestureSettings.zoomEnabled = isChecked
+        map = ktmap.apply {
+            currentLocation.enabled = false
+            zoomControls.enabled = false
         }
 
-        binding.pitchToggle.setOnCheckedChangeListener { _, isChecked ->
-            map.gestureSettings.pitchEnabled = isChecked
-        }
+        binding.run {
+            zoomToggle.setOnCheckedChangeListener { _, isChecked ->
+                ktmap.gestureSettings.zoomEnabled = isChecked
+            }
 
-        binding.rotateToggle.setOnCheckedChangeListener { _, isChecked ->
-            map.gestureSettings.rotateEnabled = isChecked
-        }
+            pitchToggle.setOnCheckedChangeListener { _, isChecked ->
+                ktmap.gestureSettings.pitchEnabled = isChecked
+            }
 
-        binding.scrollToggle.setOnCheckedChangeListener { _, isChecked ->
-            map.gestureSettings.scrollEnabled = isChecked
-        }
+            rotateToggle.setOnCheckedChangeListener { _, isChecked ->
+                ktmap.gestureSettings.rotateEnabled = isChecked
+            }
 
-        binding.horizontalScrollToggle.setOnCheckedChangeListener { _, isChecked ->
-            map.gestureSettings.horizontalScrollEnabled = isChecked
+            panToggle.setOnCheckedChangeListener { _, isChecked ->
+                ktmap.gestureSettings.panEnabled = isChecked
+            }
+
+            horizontalPanToggle.setOnCheckedChangeListener { _, isChecked ->
+                ktmap.gestureSettings.horizontalPanEnabled = isChecked
+            }
         }
     }
 

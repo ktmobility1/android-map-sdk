@@ -50,7 +50,7 @@ class ZoomGestureEventActivity :
 
     private fun attachListeners() {
         // Double Tap Gesture
-        map.addOnMapDoubleTapListener { point, coord ->
+        map.addOnMapDoubleTapListener { point, lngLat ->
             gestureAlertsAdapter.addAlert(
                 GestureAlert(GestureAlert.TYPE_NONE, "Double Tap 이벤트가 발생하였습니다.")
             )
@@ -58,7 +58,7 @@ class ZoomGestureEventActivity :
         }
 
         // Two Finger Tap Gesture
-        map.addOnMapTwoFingerTapListener { point, coord ->
+        map.addOnMapTwoFingerTapListener { point, lngLat ->
             gestureAlertsAdapter.addAlert(
                 GestureAlert(GestureAlert.TYPE_NONE, "Two Finger Tap 이벤트가 발생하였습니다.")
             )

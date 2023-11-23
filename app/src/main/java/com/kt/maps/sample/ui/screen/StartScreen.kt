@@ -1,9 +1,6 @@
 package com.kt.maps.sample.ui.screen
 
 import android.Manifest
-import android.content.ComponentName
-import android.content.Intent
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -29,7 +26,6 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.kt.maps.sample.R
 import com.kt.maps.sample.ui.theme.BackgroundMint
-import com.kt.maps.sample.ui.theme.Mint
 import kotlinx.coroutines.flow.collectLatest
 
 @OptIn(ExperimentalPermissionsApi::class)
@@ -39,9 +35,11 @@ fun StartScreen(
 ) {
     val state by startScreenViewModel.screenState.collectAsStateWithLifecycle()
 
-    val permissionState = rememberMultiplePermissionsState(permissions = listOf(
-        Manifest.permission.ACCESS_COARSE_LOCATION,
-        Manifest.permission.ACCESS_FINE_LOCATION)
+    val permissionState = rememberMultiplePermissionsState(
+        permissions = listOf(
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        )
     ) {
         startScreenViewModel.sendUiEvent(StartScreenEvent.PermissionChecked)
     }
@@ -56,13 +54,15 @@ fun StartScreen(
         is StartScreenState.Loading -> {
 
         }
+
         is StartScreenState.Data -> {
             ListScreen(
                 (state as StartScreenState.Data).examples
             ) { example ->
-                startScreenViewModel.sendUiEvent(StartScreenEvent.ClickExample(example))
+                startScreenViewModel.sendUiEvent(StartScreenEvent.TapExample(example))
             }
         }
+
         is StartScreenState.Error -> {
 
         }
@@ -159,17 +159,18 @@ private fun ExampleSearchBar(
 @Composable
 private fun ExamplesColumn(
     contents: List<Example> = emptyList(),
-    onItemClick: (Example) -> Unit
+    onItemTap: (Example) -> Unit
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
             .padding(top = 110.dp)
     ) {
         ContentColumn(
             modifier = Modifier
                 .weight(2f),
             contents.groupBy { it.category },
-            onItemClick,
+            onItemTap,
         )
     }
 }
@@ -186,16 +187,16 @@ private fun ContentColumn(
             .fillMaxWidth()
     ) {
         contents.forEach { (category, examples) ->
-            
+
             stickyHeader {
                 StickyText(text = category)
             }
-            itemsIndexed(examples) {index, item ->
+            itemsIndexed(examples) { index, item ->
                 ContentItem(
                     item,
                     event
                 )
-                if(index < examples.lastIndex) {
+                if (index < examples.lastIndex) {
                     Divider(color = Color.Black, thickness = 0.5.dp)
                 }
             }
@@ -203,7 +204,6 @@ private fun ContentColumn(
 
     }
 }
-
 
 
 @Composable
@@ -229,9 +229,7 @@ private fun ContentItem(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable {
-                onItemClick(example)
-            }
+            .clickable { onItemClick(example) }
             .padding(13.dp),
     ) {
         Text(

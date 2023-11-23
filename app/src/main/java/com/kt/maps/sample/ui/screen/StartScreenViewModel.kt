@@ -28,16 +28,23 @@ class StartScreenViewModel(application: Application) : AndroidViewModel(applicat
     private val _permissionEvent = MutableSharedFlow<Boolean>()
     val permissionEvent = _permissionEvent.asSharedFlow()
 
-    private var storedExample : Example? = null
+    private var storedExample: Example? = null
 
     /**
      * Package
      */
     private val examples: List<Example> = createExamples(
         application.packageManager
-            .getPackageInfo(application.packageName, PackageManager.GET_ACTIVITIES or PackageManager.GET_META_DATA)
+            .getPackageInfo(
+                application.packageName,
+                PackageManager.GET_ACTIVITIES or PackageManager.GET_META_DATA
+            )
             .activities
-            .filterNot { !it.name.startsWith(application.packageName) || it.name.contains(MainActivity::class.java.name) },
+            .filterNot {
+                !it.name.startsWith(application.packageName) || it.name.contains(
+                    MainActivity::class.java.name
+                )
+            },
         application
     )
 
@@ -47,7 +54,7 @@ class StartScreenViewModel(application: Application) : AndroidViewModel(applicat
 
     fun sendUiEvent(event: StartScreenEvent) {
         when (event) {
-            is StartScreenEvent.ClickExample -> {
+            is StartScreenEvent.TapExample -> {
                 if (event.example.needPermission) {
                     storedExample = event.example
                     emitPermissionEvent()

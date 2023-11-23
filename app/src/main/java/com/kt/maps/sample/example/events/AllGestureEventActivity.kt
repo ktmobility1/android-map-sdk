@@ -4,12 +4,12 @@ import android.os.Bundle
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kt.maps.gesture.OnFlingListener
-import com.kt.maps.gesture.OnMoveListener
+import com.kt.maps.gesture.OnPanListener
 import com.kt.maps.gesture.OnPitchListener
 import com.kt.maps.gesture.OnRotateListener
 import com.kt.maps.gesture.OnScaleListener
 import com.kt.maps.gesture.addOnFlingListener
-import com.kt.maps.gesture.addOnMoveListener
+import com.kt.maps.gesture.addOnPanListener
 import com.kt.maps.gesture.addOnPitchListener
 import com.kt.maps.gesture.addOnRotateListener
 import com.kt.maps.gesture.addOnScaleListener
@@ -33,7 +33,7 @@ class AllGestureEventActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mapView = binding.map
+        mapView = binding.map.apply { }
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
 
@@ -53,25 +53,25 @@ class AllGestureEventActivity :
     }
 
     private fun attachListeners() {
-        // Move Gesture
-        map.addOnMoveListener(
-            object : OnMoveListener {
-                override fun onMoveBegin() {
+        // Pan Gesture
+        map.addOnPanListener(
+            object : OnPanListener {
+                override fun onPanBegin() {
                     gestureAlertsAdapter.addAlert(
-                        GestureAlert(GestureAlert.TYPE_NONE, "Move 이벤트가 시작되었습니다.")
+                        GestureAlert(GestureAlert.TYPE_NONE, "Pan 이벤트가 시작되었습니다.")
                     )
                 }
 
-                override fun onMove(): Boolean {
+                override fun onPan(): Boolean {
                     gestureAlertsAdapter.addAlert(
-                        GestureAlert(GestureAlert.TYPE_NONE, "Move 이벤트가 진행중입니다.")
+                        GestureAlert(GestureAlert.TYPE_NONE, "Pan 이벤트가 진행중입니다.")
                     )
                     return true
                 }
 
-                override fun onMoveEnd() {
+                override fun onPanEnd() {
                     gestureAlertsAdapter.addAlert(
-                        GestureAlert(GestureAlert.TYPE_NONE, "Move 이벤트가 종료되었습니다.")
+                        GestureAlert(GestureAlert.TYPE_NONE, "Pan 이벤트가 종료되었습니다.")
                     )
                 }
             }

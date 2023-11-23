@@ -21,7 +21,7 @@ class AnimateLineActivity :
     private lateinit var map: KtMap
     private lateinit var mapView: MapView
     private var animator: ValueAnimator? = null
-    val POLYLINE_OVERLAY_COORDS = mutableListOf<LngLat>()
+    val POLYLINE_OVERLAY_LNGLATS = mutableListOf<LngLat>()
 
     // kt연구개발센터 사옥
     private var current = LngLat(127.029414, 37.471401)
@@ -69,10 +69,10 @@ class AnimateLineActivity :
                 addUpdateListener {
                     val updateValue = it.animatedValue as LngLat
 
-                    POLYLINE_OVERLAY_COORDS.add(updateValue)
+                    POLYLINE_OVERLAY_LNGLATS.add(updateValue)
 
                     map.addOverlay(PolylineOverlayOptions.Builder().apply {
-                        coords(POLYLINE_OVERLAY_COORDS)
+                        lngLats(POLYLINE_OVERLAY_LNGLATS)
                         color(Color.RED)
                         width(10f)
                         opacity(0.2f)

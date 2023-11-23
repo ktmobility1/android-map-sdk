@@ -28,20 +28,20 @@ class CurrentLocationActivity :
     }
 
     override fun onMapReady(ktmap: KtMap) {
-        map = ktmap
+        map = ktmap.apply {
+            //only current location enable
+            compass.enabled = false
+            zoomControls.enabled = false
+            logo.enabled = false
+            scaleBar.enabled = false
+            currentLocation.enabled = true
+            panControls.enabled = false
 
-        //only current location enable
-        map.compass.enabled = false
-        map.zoomControls.enabled = false
-        map.logo.enabled = false
-        map.scaleBar.enabled = false
-        map.currentLocation.enabled = true
-        map.panControls.enabled = false
-
-        //user location icon enable
-        map.locationPuckEnabled = true
-        //user location heading enabled
-        map.locationHeadingEnabled = true
+            //user location icon enable
+            locationPuckEnabled = true
+            //user location heading enabled
+            locationHeadingEnabled = true
+        }
 
         val defaultBottomMargin = map.currentLocation.marginBottom
         val defaultLeftMargin = map.currentLocation.marginLeft
@@ -49,10 +49,10 @@ class CurrentLocationActivity :
         binding.currentLocationEnabled.setOnCheckedChangeListener { _, isChecked ->
             map.currentLocation.enabled = isChecked
         }
-        binding.currentLocationPuckEnabled.setOnCheckedChangeListener{ _, isChecked ->
+        binding.currentLocationPuckEnabled.setOnCheckedChangeListener { _, isChecked ->
             map.locationPuckEnabled = isChecked
         }
-        binding.currentLocationHeadingEnabled.setOnCheckedChangeListener{ _, isChecked ->
+        binding.currentLocationHeadingEnabled.setOnCheckedChangeListener { _, isChecked ->
             map.locationHeadingEnabled = isChecked
         }
         binding.currentLocationRight.setOnCheckedChangeListener { _, isChecked ->

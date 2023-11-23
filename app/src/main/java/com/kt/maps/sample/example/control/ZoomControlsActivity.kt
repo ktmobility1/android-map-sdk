@@ -27,15 +27,15 @@ class ZoomControlsActivity :
     }
 
     override fun onMapReady(ktmap: KtMap) {
-        map = ktmap
-
-        //only zoomcontrols enable
-        map.compass.enabled = false
-        map.zoomControls.enabled = true
-        map.logo.enabled = false
-        map.scaleBar.enabled = false
-        map.currentLocation.enabled = false
-        map.panControls.enabled = false
+        map = ktmap.apply {
+            //only zoomcontrols enable
+            compass.enabled = false
+            zoomControls.enabled = true
+            logo.enabled = false
+            scaleBar.enabled = false
+            currentLocation.enabled = false
+            panControls.enabled = false
+        }
 
         val defaultTopMargin = map.zoomControls.marginTop
         val defaultRightMargin = map.zoomControls.marginRight

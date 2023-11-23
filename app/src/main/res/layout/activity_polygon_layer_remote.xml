@@ -5,11 +5,10 @@
     tools:ignore="MissingDefaultResource">
     <data>
         <variable name="activity"
-            type="com.kt.maps.sample.example.layer.PolygonLayerRemoteActivity"/>
+            type="com.kt.maps.sample.example.layer.FillLayerRemoteActivity"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/activity_background_layer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

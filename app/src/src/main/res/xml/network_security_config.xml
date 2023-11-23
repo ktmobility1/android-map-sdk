@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<network-security-config>
-    <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">211.253.38.78</domain>
-        <domain includeSubdomains="true">211.184.227.17</domain>
-    </domain-config>
-</network-security-config>

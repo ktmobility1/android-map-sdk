@@ -24,15 +24,14 @@ class PanControlsActivity :
     }
 
     override fun onMapReady(ktmap: KtMap) {
-
-        map = ktmap
-
-        //only pancontrols enable
-        map.compass.enabled = false
-        map.zoomControls.enabled = false
-        map.logo.enabled = false
-        map.scaleBar.enabled = false
-        map.currentLocation.enabled = false
-        map.panControls.enabled = true
+        map = ktmap.apply {
+            //only pancontrols enable
+            compass.enabled = false
+            zoomControls.enabled = false
+            logo.enabled = false
+            scaleBar.enabled = false
+            currentLocation.enabled = false
+            panControls.enabled = true
+        }
     }
 }

@@ -8,7 +8,7 @@
                   type="com.kt.maps.sample.example.interaction.ToggleGestureSettingsActivity"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/activity_double_click_zoom"
+            android:id="@+id/activity_double_tap_zoom"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -44,17 +44,17 @@
                     android:text="@string/rotate_text"
                     app:switchPadding="10dp"/>
             <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/scroll_toggle"
+                    android:id="@+id/pan_toggle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:checked="true"
-                    android:text="@string/scroll_text"
+                    android:text="@string/pan_text"
                     app:switchPadding="10dp"/>
             <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/horizontal_scroll_toggle"
+                    android:id="@+id/horizontal_pan_toggle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/horizontal_scroll_text"
+                    android:text="@string/horizontal_pan_text"
                     android:checked="true"
                     app:switchPadding="10dp"/>
             <com.google.android.material.switchmaterial.SwitchMaterial

@@ -1,7 +1,5 @@
 package com.kt.maps.sample.ui.screen
 
-import android.content.Intent
-
 sealed class StartScreenState {
 
     object Loading : StartScreenState()

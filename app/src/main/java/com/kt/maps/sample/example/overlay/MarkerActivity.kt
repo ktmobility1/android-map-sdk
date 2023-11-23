@@ -20,6 +20,7 @@ class MarkerActivity : BaseActivity<ActivityMarkerBinding>(R.layout.activity_mar
         super.onCreate(savedInstanceState)
 
         binding.map.getMapAsync(this)
+
     }
 
     override fun onMapReady(ktmap: KtMap) {
@@ -71,6 +72,7 @@ class MarkerActivity : BaseActivity<ActivityMarkerBinding>(R.layout.activity_mar
         }
 
     }
+
 
     companion object {
         private val MARKER1_POSITION = LngLat(longitude = 126.97794, latitude = 37.57103)
