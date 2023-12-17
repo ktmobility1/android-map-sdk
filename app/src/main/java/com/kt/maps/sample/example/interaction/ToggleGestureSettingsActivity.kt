@@ -1,15 +1,15 @@
 package com.kt.maps.sample.example.interaction
 
 import android.os.Bundle
+import com.kt.maps.KtMap
+import com.kt.maps.MapView
+import com.kt.maps.OnMapReadyCallback
 import com.kt.maps.control.location.currentLocation
 import com.kt.maps.control.zoom.zoomControls
 import com.kt.maps.gesture.gestureSettings
 import com.kt.maps.sample.BaseActivity
 import com.kt.maps.sample.R
 import com.kt.maps.sample.databinding.ActivityToggleGestureSettingsBinding
-import com.kt.maps.sdk.KtMap
-import com.kt.maps.sdk.MapView
-import com.kt.maps.sdk.OnMapReadyCallback
 
 class ToggleGestureSettingsActivity :
     BaseActivity<ActivityToggleGestureSettingsBinding>(R.layout.activity_toggle_gesture_settings),
@@ -76,9 +76,9 @@ class ToggleGestureSettingsActivity :
         mapView.onStop()
     }
 
-    override fun onLowMemory() {
-        super.onLowMemory()
-        mapView.onLowMemory()
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
     }
 
     override fun onDestroy() {

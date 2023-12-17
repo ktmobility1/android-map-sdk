@@ -3,6 +3,9 @@ package com.kt.maps.sample.example.events
 import android.os.Bundle
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.kt.maps.KtMap
+import com.kt.maps.MapView
+import com.kt.maps.OnMapReadyCallback
 import com.kt.maps.control.zoom.zoomControls
 import com.kt.maps.gesture.OnScaleListener
 import com.kt.maps.gesture.addOnMapDoubleTapListener
@@ -13,9 +16,6 @@ import com.kt.maps.sample.R
 import com.kt.maps.sample.databinding.ActivityZoomGesturesEventBinding
 import com.kt.maps.sample.ui.common.GestureAlert
 import com.kt.maps.sample.ui.common.GestureAlertsAdapter
-import com.kt.maps.sdk.KtMap
-import com.kt.maps.sdk.MapView
-import com.kt.maps.sdk.OnMapReadyCallback
 
 class ZoomGestureEventActivity :
     BaseActivity<ActivityZoomGesturesEventBinding>(R.layout.activity_zoom_gestures_event),
@@ -104,9 +104,9 @@ class ZoomGestureEventActivity :
         mapView.onStop()
     }
 
-    override fun onLowMemory() {
-        super.onLowMemory()
-        mapView.onLowMemory()
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
     }
 
     override fun onDestroy() {

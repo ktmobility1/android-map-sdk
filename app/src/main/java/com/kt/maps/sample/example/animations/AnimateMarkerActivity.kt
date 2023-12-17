@@ -4,6 +4,9 @@ import android.animation.TypeEvaluator
 import android.animation.ValueAnimator
 import android.graphics.PointF
 import android.os.Bundle
+import com.kt.maps.KtMap
+import com.kt.maps.MapView
+import com.kt.maps.OnMapReadyCallback
 import com.kt.maps.camera.CameraPositionOptions
 import com.kt.maps.geometry.LngLat
 import com.kt.maps.gesture.OnMapTapListener
@@ -13,14 +16,12 @@ import com.kt.maps.overlay.marker.MarkerOptions
 import com.kt.maps.sample.BaseActivity
 import com.kt.maps.sample.R
 import com.kt.maps.sample.databinding.ActivityAnimateMarkerBinding
-import com.kt.maps.sdk.KtMap
-import com.kt.maps.sdk.OnMapReadyCallback
 
 class AnimateMarkerActivity :
     BaseActivity<ActivityAnimateMarkerBinding>(R.layout.activity_animate_marker),
     OnMapReadyCallback, OnMapTapListener {
     private lateinit var map: KtMap
-
+    private lateinit var mapView: MapView
     private var animator: ValueAnimator? = null
     private var currentPoint = LngLat(longitude = 127.02881, latitude = 37.47195)
     private var marker: Marker? = null
@@ -28,7 +29,8 @@ class AnimateMarkerActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val mapView = binding.map
+        mapView = binding.map
+        mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
     }
 
@@ -39,7 +41,7 @@ class AnimateMarkerActivity :
 
             addOnMapTapListener(this@AnimateMarkerActivity)
 
-            jumpTo(cameraOptions = CameraPositionOptions().zoom(16.0).lngLat(currentPoint))
+            jumpTo(cameraOptions = CameraPositionOptions().zoom(16f).lngLat(currentPoint))
 
             marker = addOverlay(
                 MarkerOptions.Builder().apply {
@@ -81,5 +83,35 @@ class AnimateMarkerActivity :
         currentPoint = lngLat
 
         return true
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mapView.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mapView.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mapView.onPause()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mapView.onStop()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mapView.onDestroy()
     }
 }

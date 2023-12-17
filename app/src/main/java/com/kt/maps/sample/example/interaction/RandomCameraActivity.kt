@@ -1,15 +1,15 @@
 package com.kt.maps.sample.example.interaction
 
 import android.os.Bundle
+import com.kt.maps.KtMap
+import com.kt.maps.MapView
+import com.kt.maps.OnMapReadyCallback
 import com.kt.maps.camera.CameraPositionOptions
 import com.kt.maps.geometry.LngLat
 import com.kt.maps.sample.BaseActivity
 import com.kt.maps.sample.R
 import com.kt.maps.sample.databinding.ActivityRandomCameraBinding
 import com.kt.maps.sample.ui.common.showSnackbar
-import com.kt.maps.sdk.KtMap
-import com.kt.maps.sdk.MapView
-import com.kt.maps.sdk.OnMapReadyCallback
 
 class RandomCameraActivity :
     BaseActivity<ActivityRandomCameraBinding>(R.layout.activity_random_camera), OnMapReadyCallback {
@@ -28,9 +28,9 @@ class RandomCameraActivity :
     override fun onMapReady(ktmap: KtMap) {
         map = ktmap
 
-        // 줌 변경 버튼 클릭 핸들러
+        // 줌 변경 버튼 탭 핸들러
         binding.buttonCameraZoom.setOnClickListener {
-            val zoom = random(6.0, 20.0) // 6과 20 사이 랜덤 숫자 생성
+            val zoom = random(6f, 20f) // 6과 20 사이 랜덤 숫자 생성
 
             map.easeTo(
                 cameraOptions = CameraPositionOptions().zoom(zoom),
@@ -39,19 +39,26 @@ class RandomCameraActivity :
             mapView.showSnackbar(R.string.changed_camera_zoom, zoom)
         }
 
-        // 중심점  변경 버튼 클릭 핸들러
+        // 중심점  변경 버튼 탭 핸들러
         binding.buttonCameraCenter.setOnClickListener {
-            val lng = random(127.0, 128.0) // 경도 - 127과 128 사이 랜덤 숫자 생성
-            val lat = random(35.0, 37.0) // 위도 - 35와 37 사이 랜덤 숫자 생성
+            val lng = random(127f, 128f) // 경도 - 127과 128 사이 랜덤 숫자 생성
+            val lat = random(35f, 37f) // 위도 - 35와 37 사이 랜덤 숫자 생성
 
-            map.jumpTo(CameraPositionOptions().lngLat(LngLat(latitude = lat, longitude = lng)))
+            map.jumpTo(
+                CameraPositionOptions().lngLat(
+                    LngLat(
+                        latitude = lat.toDouble(),
+                        longitude = lng.toDouble()
+                    )
+                )
+            )
 
             mapView.showSnackbar(R.string.changed_camera_center, lat, lng)
         }
 
     }
 
-    private fun random(min: Double, max: Double) = Math.random() * (max - min) + min
+    private fun random(min: Float, max: Float) = (Math.random() * (max - min) + min).toFloat()
 
     override fun onStart() {
         super.onStart()
@@ -73,9 +80,9 @@ class RandomCameraActivity :
         mapView.onStop()
     }
 
-    override fun onLowMemory() {
-        super.onLowMemory()
-        mapView.onLowMemory()
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
     }
 
     override fun onDestroy() {

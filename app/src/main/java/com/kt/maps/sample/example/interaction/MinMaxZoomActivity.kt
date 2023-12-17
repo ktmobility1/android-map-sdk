@@ -1,13 +1,13 @@
 package com.kt.maps.sample.example.interaction
 
 import android.os.Bundle
+import com.kt.maps.KtMap
+import com.kt.maps.MapView
+import com.kt.maps.OnMapReadyCallback
 import com.kt.maps.camera.OnCameraChangeListener
 import com.kt.maps.sample.BaseActivity
 import com.kt.maps.sample.R
 import com.kt.maps.sample.databinding.ActivityMinMaxZoomBinding
-import com.kt.maps.sdk.KtMap
-import com.kt.maps.sdk.MapView
-import com.kt.maps.sdk.OnMapReadyCallback
 
 class MinMaxZoomActivity : BaseActivity<ActivityMinMaxZoomBinding>(R.layout.activity_min_max_zoom),
     OnMapReadyCallback {
@@ -22,8 +22,8 @@ class MinMaxZoomActivity : BaseActivity<ActivityMinMaxZoomBinding>(R.layout.acti
         mapView.getMapAsync(this)
 
         // set min/max zoom
-        mapView.ktMapOptions.maxZoom(15.0)
-        mapView.ktMapOptions.minZoom(9.0)
+        mapView.mapOptions.maxZoom(15f)
+        mapView.mapOptions.minZoom(9f)
 
     }
 
@@ -70,9 +70,9 @@ class MinMaxZoomActivity : BaseActivity<ActivityMinMaxZoomBinding>(R.layout.acti
         mapView.onStop()
     }
 
-    override fun onLowMemory() {
-        super.onLowMemory()
-        mapView.onLowMemory()
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
     }
 
     override fun onDestroy() {

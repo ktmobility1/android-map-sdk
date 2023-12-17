@@ -2,6 +2,9 @@ package com.kt.maps.sample.example.control
 
 import android.os.Bundle
 import android.view.Gravity
+import com.kt.maps.KtMap
+import com.kt.maps.MapView
+import com.kt.maps.OnMapReadyCallback
 import com.kt.maps.control.compass.compass
 import com.kt.maps.control.location.currentLocation
 import com.kt.maps.control.logo.logo
@@ -13,9 +16,6 @@ import com.kt.maps.sample.BaseActivity
 import com.kt.maps.sample.R
 import com.kt.maps.sample.databinding.ActivityLogoBinding
 import com.kt.maps.sample.ui.common.showSnackbar
-import com.kt.maps.sdk.KtMap
-import com.kt.maps.sdk.MapView
-import com.kt.maps.sdk.OnMapReadyCallback
 
 class LogoActivity : BaseActivity<ActivityLogoBinding>(R.layout.activity_logo), OnMapReadyCallback {
 
@@ -42,17 +42,18 @@ class LogoActivity : BaseActivity<ActivityLogoBinding>(R.layout.activity_logo), 
             panControls.enabled = false
         }
 
-        val defaultBottomMargin = map.logo.marginBottom
-        val defaultRightMargin = map.logo.marginRight
-        val onLogoTap = OnLogoTapListener {
-            mapView.showSnackbar(R.string.logo_tap)
+        var defaultBottomMargin = map.logo.marginBottom
+        var defaultRightMargin = map.logo.marginRight
+        if (binding.logoMargin.isChecked) {
+            defaultBottomMargin /= 2
+            defaultRightMargin /= 2
         }
 
         binding.logoTop.setOnCheckedChangeListener { _, isChecked ->
             map.logo.gravity = if (isChecked)
-                Gravity.TOP or Gravity.RIGHT
+                Gravity.TOP or Gravity.END
             else
-                Gravity.BOTTOM or Gravity.RIGHT
+                Gravity.BOTTOM or Gravity.END
 
         }
 
@@ -71,13 +72,19 @@ class LogoActivity : BaseActivity<ActivityLogoBinding>(R.layout.activity_logo), 
         }
 
         binding.logoTap.setOnCheckedChangeListener { _, isChecked ->
-            map.logo
-            if (isChecked)
-                map.logo.addOnLogoTapListener(onLogoTap)
-            else
-                map.logo.removeOnLogoTapListener(onLogoTap)
-
+            processLogoTapListen(isChecked)
         }
+    }
+
+    private val onLogoTap = OnLogoTapListener {
+        mapView.showSnackbar(R.string.logo_tap)
+    }
+
+    private fun processLogoTapListen(add: Boolean) {
+        if (add)
+            map.logo.addOnLogoTapListener(onLogoTap)
+        else
+            map.logo.removeOnLogoTapListener(onLogoTap)
     }
 
     override fun onStart() {
@@ -100,9 +107,9 @@ class LogoActivity : BaseActivity<ActivityLogoBinding>(R.layout.activity_logo), 
         mapView.onStop()
     }
 
-    override fun onLowMemory() {
-        super.onLowMemory()
-        mapView.onLowMemory()
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
     }
 
     override fun onDestroy() {

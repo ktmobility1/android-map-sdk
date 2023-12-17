@@ -3,6 +3,9 @@ package com.kt.maps.sample.example.control
 import android.os.Bundle
 import android.view.Gravity
 import androidx.appcompat.content.res.AppCompatResources
+import com.kt.maps.KtMap
+import com.kt.maps.MapView
+import com.kt.maps.OnMapReadyCallback
 import com.kt.maps.control.compass.compass
 import com.kt.maps.control.location.currentLocation
 import com.kt.maps.control.logo.logo
@@ -12,19 +15,21 @@ import com.kt.maps.control.zoom.zoomControls
 import com.kt.maps.sample.BaseActivity
 import com.kt.maps.sample.R
 import com.kt.maps.sample.databinding.ActivityCurrentLocationBinding
-import com.kt.maps.sdk.KtMap
-import com.kt.maps.sdk.OnMapReadyCallback
 
 class CurrentLocationActivity :
     BaseActivity<ActivityCurrentLocationBinding>(R.layout.activity_current_location),
     OnMapReadyCallback {
 
     private lateinit var map: KtMap
+    private lateinit var mapView: MapView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding.map.getMapAsync(this)
+        mapView = binding.map.apply {
+            onCreate(savedInstanceState)
+            getMapAsync(this@CurrentLocationActivity)
+        }
     }
 
     override fun onMapReady(ktmap: KtMap) {
@@ -34,17 +39,21 @@ class CurrentLocationActivity :
             zoomControls.enabled = false
             logo.enabled = false
             scaleBar.enabled = false
-            currentLocation.enabled = true
+            currentLocation.enabled = binding.currentLocationEnabled.isChecked
             panControls.enabled = false
 
             //user location icon enable
-            locationPuckEnabled = true
+            locationPuckEnabled = binding.currentLocationPuckEnabled.isChecked
             //user location heading enabled
-            locationHeadingEnabled = true
+            locationHeadingEnabled = binding.currentLocationHeadingEnabled.isChecked
         }
 
-        val defaultBottomMargin = map.currentLocation.marginBottom
-        val defaultLeftMargin = map.currentLocation.marginLeft
+        var defaultBottomMargin = map.currentLocation.marginBottom
+        var defaultLeftMargin = map.currentLocation.marginLeft
+        if (binding.currentLocationMargin.isChecked) {
+            defaultBottomMargin /= 2
+            defaultLeftMargin /= 2
+        }
 
         binding.currentLocationEnabled.setOnCheckedChangeListener { _, isChecked ->
             map.currentLocation.enabled = isChecked
@@ -97,5 +106,35 @@ class CurrentLocationActivity :
                 map.currentLocation.opacity = 1f
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mapView.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mapView.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mapView.onPause()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mapView.onStop()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mapView.onDestroy()
     }
 }

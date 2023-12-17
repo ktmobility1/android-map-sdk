@@ -1,20 +1,21 @@
 package com.kt.maps.sample.example.layer
 
 import android.os.Bundle
+import com.kt.maps.KtMap
+import com.kt.maps.MapView
+import com.kt.maps.OnMapReadyCallback
 import com.kt.maps.camera.CameraPositionOptions
 import com.kt.maps.geometry.LngLat
 import com.kt.maps.sample.BaseActivity
 import com.kt.maps.sample.R
 import com.kt.maps.sample.databinding.ActivityPolygonLayerRemoteBinding
-import com.kt.maps.sdk.KtMap
-import com.kt.maps.sdk.OnMapReadyCallback
-import com.kt.maps.sdk.style.layers.FillLayer
-import com.kt.maps.sdk.style.sources.GeojsonSource
-import com.kt.maps.sdk.style.styles.FillStylePaints
-import com.kt.maps.sdk.style.styles.FillStylePaints.FillAntialias
-import com.kt.maps.sdk.style.styles.FillStylePaints.FillColor
-import com.kt.maps.sdk.style.styles.FillStylePaints.FillOpacity
-import com.kt.maps.sdk.style.styles.FillStylePaints.FillOutlineColor
+import com.kt.maps.style.LayerFactory
+import com.kt.maps.style.sources.GeojsonSource
+import com.kt.maps.style.styles.FillStylePaints
+import com.kt.maps.style.styles.FillStylePaints.FillAntialias
+import com.kt.maps.style.styles.FillStylePaints.FillColor
+import com.kt.maps.style.styles.FillStylePaints.FillOpacity
+import com.kt.maps.style.styles.FillStylePaints.FillOutlineColor
 import java.net.URI
 
 class FillLayerRemoteActivity :
@@ -22,11 +23,13 @@ class FillLayerRemoteActivity :
     OnMapReadyCallback {
 
     private lateinit var mMap: KtMap
+    private lateinit var mapView: MapView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val mapView = binding.map
+        mapView = binding.map
+        mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
     }
 
@@ -34,7 +37,7 @@ class FillLayerRemoteActivity :
         mMap = ktmap
         mMap.jumpTo(
             cameraOptions = CameraPositionOptions(
-                zoom = 10.0,
+                zoom = 10f,
                 lngLat = LngLat(longitude = 127.017422, latitude = 37.49144)
             )
         )
@@ -43,7 +46,7 @@ class FillLayerRemoteActivity :
 
         mMap.addSource(source)
         mMap.addLayer(
-            FillLayer(source = source.id)
+            LayerFactory.fill(source = source.id)
                 .paint(
                     FillStylePaints(
                         FillAntialias(true),
@@ -53,5 +56,35 @@ class FillLayerRemoteActivity :
                     )
                 )
         )
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mapView.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mapView.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mapView.onPause()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mapView.onStop()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mapView.onDestroy()
     }
 }

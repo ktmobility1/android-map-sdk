@@ -4,6 +4,9 @@ import android.graphics.PointF
 import android.os.Bundle
 import com.google.gson.JsonObject
 import com.google.gson.JsonPrimitive
+import com.kt.maps.KtMap
+import com.kt.maps.MapView
+import com.kt.maps.OnMapReadyCallback
 import com.kt.maps.geometry.LngLat
 import com.kt.maps.gesture.OnMapTapListener
 import com.kt.maps.gesture.addOnMapTapListener
@@ -14,16 +17,14 @@ import com.kt.maps.sample.BaseActivity
 import com.kt.maps.sample.R
 import com.kt.maps.sample.databinding.ActivityAddMarkerBinding
 import com.kt.maps.sample.ui.common.showSnackbar
-import com.kt.maps.sdk.KtMap
-import com.kt.maps.sdk.MapView
-import com.kt.maps.sdk.OnMapReadyCallback
-import com.kt.maps.sdk.style.layers.SymbolLayer
-import com.kt.maps.sdk.style.sources.GeojsonSource
-import com.kt.maps.sdk.style.styles.SymbolIconStyleLayouts
-import com.kt.maps.sdk.style.styles.SymbolStyleLayouts
-import com.kt.maps.sdk.style.styles.SymbolStylePaints
-import com.kt.maps.sdk.style.styles.SymbolTextStyleLayouts
-import com.kt.maps.sdk.style.styles.SymbolTextStylePaints
+import com.kt.maps.style.LayerFactory
+import com.kt.maps.style.layers.SymbolLayer
+import com.kt.maps.style.sources.GeojsonSource
+import com.kt.maps.style.styles.SymbolIconStyleLayouts
+import com.kt.maps.style.styles.SymbolStyleLayouts
+import com.kt.maps.style.styles.SymbolStylePaints
+import com.kt.maps.style.styles.SymbolTextStyleLayouts
+import com.kt.maps.style.styles.SymbolTextStylePaints
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
@@ -105,7 +106,7 @@ class AddMarkerActivity : BaseActivity<ActivityAddMarkerBinding>(R.layout.activi
         return true
     }
 
-    // 마커 캡션 추가 버튼 클릭 시
+    // 마커 캡션 추가 버튼 탭 시
     private fun addMarkerCaption() {
 
         if (!isShowableSymbolLayer) {
@@ -116,7 +117,7 @@ class AddMarkerActivity : BaseActivity<ActivityAddMarkerBinding>(R.layout.activi
                 getDrawable(com.kt.maps.overlay.marker.R.drawable.ktmap_marker_icon_default)?.let {
                     map.addImage("symbolDrawable", drawable = it)
 
-                    layer = SymbolLayer(source = source.id)
+                    layer = LayerFactory.symbol(source = source.id)
                         .paint(
                             SymbolStylePaints(
                                 textStylePaints = SymbolTextStylePaints(
@@ -127,11 +128,11 @@ class AddMarkerActivity : BaseActivity<ActivityAddMarkerBinding>(R.layout.activi
                             SymbolStyleLayouts(
                                 iconStyleLayouts = SymbolIconStyleLayouts(
                                     SymbolIconStyleLayouts.IconImage("symbolDrawable"),
-                                    SymbolIconStyleLayouts.IconSize(1.0f),
+                                    SymbolIconStyleLayouts.IconSize(1f),
                                     SymbolIconStyleLayouts.IconAnchor.BOTTOM
                                 ),
                                 textStyleLayouts = SymbolTextStyleLayouts(
-                                    SymbolTextStyleLayouts.TextField(fieldName = "title"),
+                                    SymbolTextStyleLayouts.TextFieldName("title"),
                                     SymbolTextStyleLayouts.TextAnchor.TOP,
                                     SymbolTextStyleLayouts.TextOffset(arrayOf(0, 1))
                                 )
@@ -174,9 +175,9 @@ class AddMarkerActivity : BaseActivity<ActivityAddMarkerBinding>(R.layout.activi
         mapView.onStop()
     }
 
-    override fun onLowMemory() {
-        super.onLowMemory()
-        mapView.onLowMemory()
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
     }
 
     override fun onDestroy() {

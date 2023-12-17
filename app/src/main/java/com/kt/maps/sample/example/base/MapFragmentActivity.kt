@@ -2,12 +2,12 @@ package com.kt.maps.sample.example.base
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.kt.maps.KtMap
+import com.kt.maps.MapFragment
+import com.kt.maps.OnMapReadyCallback
 import com.kt.maps.sample.R
-import com.kt.maps.sdk.KtMap
-import com.kt.maps.sdk.MapFragment
-import com.kt.maps.sdk.OnMapReadyCallback
 
-class MapFragmentActivity: AppCompatActivity(), OnMapReadyCallback {
+class MapFragmentActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

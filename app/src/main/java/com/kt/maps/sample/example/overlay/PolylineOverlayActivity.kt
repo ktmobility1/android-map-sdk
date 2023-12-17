@@ -6,6 +6,9 @@ import android.graphics.Color
 import android.graphics.PointF
 import android.os.Bundle
 import androidx.appcompat.content.res.AppCompatResources
+import com.kt.maps.KtMap
+import com.kt.maps.MapView
+import com.kt.maps.OnMapReadyCallback
 import com.kt.maps.geometry.LngLat
 import com.kt.maps.gesture.OnMapTapListener
 import com.kt.maps.gesture.addOnMapTapListener
@@ -16,8 +19,6 @@ import com.kt.maps.overlay.polyline.PolylineOverlayOptions
 import com.kt.maps.sample.BaseActivity
 import com.kt.maps.sample.R
 import com.kt.maps.sample.databinding.ActivityPolylineOverlayBinding
-import com.kt.maps.sdk.KtMap
-import com.kt.maps.sdk.OnMapReadyCallback
 import kotlin.random.Random
 
 class PolylineOverlayActivity :
@@ -26,6 +27,7 @@ class PolylineOverlayActivity :
     OnMapTapListener {
 
     private lateinit var map: KtMap
+    private lateinit var mapView: MapView
 
     private var polyline: PolylineOverlay? = null
     private val points = mutableListOf<LngLat>()
@@ -38,7 +40,10 @@ class PolylineOverlayActivity :
 
         pinBitmap = R.drawable.pin_red_dot.toBitmap()
 
-        binding.map.getMapAsync(this)
+        mapView = binding.map.apply {
+            onCreate(savedInstanceState)
+            getMapAsync(this@PolylineOverlayActivity)
+        }
 
         binding.btnInit.setOnClickListener { removeAllOverlays() }
     }
@@ -125,5 +130,35 @@ class PolylineOverlayActivity :
     private fun randomColor(): Int =
         Color.rgb(Random.nextInt(255), Random.nextInt(255), Random.nextInt(255))
 
+
+    override fun onStart() {
+        super.onStart()
+        mapView.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mapView.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mapView.onPause()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mapView.onStop()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mapView.onDestroy()
+    }
 
 }

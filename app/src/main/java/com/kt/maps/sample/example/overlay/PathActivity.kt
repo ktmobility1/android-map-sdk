@@ -3,6 +3,9 @@ package com.kt.maps.sample.example.overlay
 import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.content.res.AppCompatResources
+import com.kt.maps.KtMap
+import com.kt.maps.MapView
+import com.kt.maps.OnMapReadyCallback
 import com.kt.maps.camera.CameraPositionOptions
 import com.kt.maps.extensions.path.ArrowOverlay
 import com.kt.maps.extensions.path.ArrowOverlayOptions
@@ -16,13 +19,12 @@ import com.kt.maps.geometry.LngLat
 import com.kt.maps.sample.BaseActivity
 import com.kt.maps.sample.R
 import com.kt.maps.sample.databinding.ActivityPathBinding
-import com.kt.maps.sdk.KtMap
-import com.kt.maps.sdk.OnMapReadyCallback
 
 class PathActivity : BaseActivity<ActivityPathBinding>(R.layout.activity_path),
     OnMapReadyCallback {
 
     private lateinit var map: KtMap
+    private lateinit var mapView: MapView
 
     private var path: PathOverlay? = null
     private var arrow: ArrowOverlay? = null
@@ -32,7 +34,10 @@ class PathActivity : BaseActivity<ActivityPathBinding>(R.layout.activity_path),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding.map.getMapAsync(this)
+        mapView = binding.map.apply {
+            onCreate(savedInstanceState)
+            getMapAsync(this@PathActivity)
+        }
     }
 
     override fun onMapReady(ktmap: KtMap) {
@@ -63,8 +68,8 @@ class PathActivity : BaseActivity<ActivityPathBinding>(R.layout.activity_path),
         // 인덱스 0으로 이동
         updateArrowOverlay(0)
 
-        // 다음 버튼 클릭한 경우 현재 인덱스 + 1로 이동
-        binding.buttonPathNext.setOnClickListener {
+        // 다음 버튼 탭한 경우 현재 인덱스 + 1로 이동
+        binding.buttonArrowNext.setOnClickListener {
             if (index + 2 <= LINKS.size - 1)
                 index++
             else
@@ -72,8 +77,8 @@ class PathActivity : BaseActivity<ActivityPathBinding>(R.layout.activity_path),
             updateArrowOverlay(index)
         }
 
-        // 이전 버튼 클릭한 경우 현재 인덱스 - 1로 이동
-        binding.buttonPathPrev.setOnClickListener {
+        // 이전 버튼 탭한 경우 현재 인덱스 - 1로 이동
+        binding.buttonArrowPrev.setOnClickListener {
             if (index - 1 >= 0)
                 index--
             else
@@ -106,7 +111,7 @@ class PathActivity : BaseActivity<ActivityPathBinding>(R.layout.activity_path),
         )
 
         map.jumpTo(
-            cameraOptions = CameraPositionOptions(zoom = 15.0, lngLat = LINKS[index + 1][0])
+            cameraOptions = CameraPositionOptions(zoom = 15f, lngLat = LINKS[index + 1][0])
         )
     }
 
@@ -345,5 +350,35 @@ class PathActivity : BaseActivity<ActivityPathBinding>(R.layout.activity_path),
                 LngLat(latitude = 37.572006799816506, longitude = 126.97729812882523)
             )
         )
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mapView.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mapView.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mapView.onPause()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mapView.onStop()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mapView.onDestroy()
     }
 }

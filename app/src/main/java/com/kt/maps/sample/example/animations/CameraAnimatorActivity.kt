@@ -12,19 +12,21 @@ import android.view.animation.BounceInterpolator
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
+import com.kt.maps.KtMap
+import com.kt.maps.MapView
+import com.kt.maps.OnMapReadyCallback
 import com.kt.maps.camera.CameraPositionOptions
 import com.kt.maps.geometry.LngLat
 import com.kt.maps.sample.BaseActivity
 import com.kt.maps.sample.R
 import com.kt.maps.sample.databinding.ActivityCameraAnimatorBinding
-import com.kt.maps.sdk.KtMap
-import com.kt.maps.sdk.OnMapReadyCallback
 
 class CameraAnimatorActivity :
     BaseActivity<ActivityCameraAnimatorBinding>(R.layout.activity_camera_animator),
     OnMapReadyCallback, AdapterView.OnItemSelectedListener {
 
     private lateinit var map: KtMap
+    private lateinit var mapView: MapView
 
     private var interpolator: TimeInterpolator = FastOutSlowInInterpolator()
     private var cameraMoving: CameraMoving = CameraMoving.MOVE_TO
@@ -32,7 +34,10 @@ class CameraAnimatorActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding.map.getMapAsync(this)
+        mapView = binding.map.apply {
+            onCreate(savedInstanceState)
+            getMapAsync(this@CameraAnimatorActivity)
+        }
 
         initSpinner()
         initFab()
@@ -45,7 +50,7 @@ class CameraAnimatorActivity :
             jumpTo(
                 cameraOptions = CameraPositionOptions(
                     lngLat = LngLat(longitude = 126.97794, latitude = 37.57103),
-                    zoom = 15.0
+                    zoom = 15f
                 )
             )
         }
@@ -162,7 +167,7 @@ class CameraAnimatorActivity :
         zoomAnimator.duration = ANIMATION_DURATION.toLong()
         zoomAnimator.interpolator = interpolator
         zoomAnimator.addUpdateListener { animation: ValueAnimator ->
-            map.jumpTo(CameraPositionOptions(zoom = (animation.animatedValue as Float).toDouble()))
+            map.jumpTo(CameraPositionOptions(zoom = (animation.animatedValue as Float)))
         }
         return zoomAnimator
     }
@@ -177,7 +182,7 @@ class CameraAnimatorActivity :
         bearingAnimator.duration = ANIMATION_DURATION.toLong()
         bearingAnimator.interpolator = interpolator
         bearingAnimator.addUpdateListener { animation: ValueAnimator ->
-            map.jumpTo(CameraPositionOptions(bearing = (animation.animatedValue as Float).toDouble()))
+            map.jumpTo(CameraPositionOptions(bearing = (animation.animatedValue as Float)))
         }
         return bearingAnimator
     }
@@ -191,9 +196,39 @@ class CameraAnimatorActivity :
         pitchAnimator.duration = ANIMATION_DURATION.toLong()
         pitchAnimator.interpolator = interpolator
         pitchAnimator.addUpdateListener { animation: ValueAnimator ->
-            map.jumpTo(CameraPositionOptions(pitch = (animation.animatedValue as Float).toDouble()))
+            map.jumpTo(CameraPositionOptions(pitch = (animation.animatedValue as Float)))
         }
         return pitchAnimator
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mapView.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mapView.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mapView.onPause()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mapView.onStop()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mapView.onDestroy()
     }
 
     companion object {

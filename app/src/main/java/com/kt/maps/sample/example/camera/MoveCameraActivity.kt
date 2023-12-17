@@ -4,19 +4,27 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import com.kt.maps.KtMap
+import com.kt.maps.MapView
+import com.kt.maps.OnMapReadyCallback
 import com.kt.maps.camera.CameraPositionOptions
 import com.kt.maps.geometry.LngLat
 import com.kt.maps.sample.BaseActivity
 import com.kt.maps.sample.R
 import com.kt.maps.sample.databinding.ActivityMoveCameraBinding
 import com.kt.maps.sample.ui.common.showSnackbar
-import com.kt.maps.sdk.KtMap
-import com.kt.maps.sdk.MapView
-import com.kt.maps.sdk.OnMapReadyCallback
 
 class MoveCameraActivity :
     BaseActivity<ActivityMoveCameraBinding>(R.layout.activity_move_camera),
     OnMapReadyCallback, AdapterView.OnItemSelectedListener {
+
+    companion object {
+        // 서울
+        val START_OPTIONS = CameraPositionOptions(lngLat = LngLat(126.9778, 37.5722), zoom = 11f)
+
+        // 인천 공항
+        val END_OPTIONS = CameraPositionOptions(lngLat = LngLat(126.4513, 37.4493), zoom = 11f)
+    }
 
     private lateinit var map: KtMap
     private lateinit var mapView: MapView
@@ -50,13 +58,18 @@ class MoveCameraActivity :
      * 지도 이동 버튼 초기화
      */
     private fun initFab() {
-        binding.buttonCameraMove.setOnClickListener {
-            when (selectedIndex) {
-                0 -> map.jumpTo(cameraOptions = END_OPTIONS)
-                1 -> map.easeTo(cameraOptions = END_OPTIONS, duration = 3000)
-                2 -> map.flyTo(cameraOptions = END_OPTIONS, duration = 3000)
+        binding.buttonCameraMove.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                initMap()
+                mapView.showSnackbar("camera init")
+            } else {
+                when (selectedIndex) {
+                    0 -> map.jumpTo(cameraOptions = END_OPTIONS)
+                    1 -> map.easeTo(cameraOptions = END_OPTIONS, duration = 3000)
+                    2 -> map.flyTo(cameraOptions = END_OPTIONS, duration = 3000)
+                }
+                mapView.showSnackbar("camera ${resources.getStringArray(R.array.camera_animation_type_array)[selectedIndex]}")
             }
-            mapView.showSnackbar("camera ${resources.getStringArray(R.array.camera_animation_type_array)[selectedIndex]}")
         }
     }
 
@@ -74,6 +87,7 @@ class MoveCameraActivity :
             ).also { adapter ->
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             }
+
             // 지도 이동 animation item 기본값 반영
             setSelection(selectedIndex)
 
@@ -88,20 +102,9 @@ class MoveCameraActivity :
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         // 지도 이동 animation type 변경
         selectedIndex = position
-        initMap()
     }
 
-    override fun onNothingSelected(parent: AdapterView<*>?) {
-        initMap()
-    }
-
-    companion object {
-        // 서울
-        val START_OPTIONS = CameraPositionOptions(lngLat = LngLat(126.9778, 37.5722), zoom = 11.0)
-
-        // 인천 공항
-        val END_OPTIONS = CameraPositionOptions(lngLat = LngLat(126.4513, 37.4493), zoom = 11.0)
-    }
+    override fun onNothingSelected(parent: AdapterView<*>?) {}
 
     override fun onStart() {
         super.onStart()
@@ -123,9 +126,9 @@ class MoveCameraActivity :
         mapView.onStop()
     }
 
-    override fun onLowMemory() {
-        super.onLowMemory()
-        mapView.onLowMemory()
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
     }
 
     override fun onDestroy() {

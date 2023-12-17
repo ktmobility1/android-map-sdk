@@ -1,13 +1,13 @@
 package com.kt.maps.sample.example.camera
 
 import android.os.Bundle
+import com.kt.maps.KtMap
+import com.kt.maps.MapView
+import com.kt.maps.OnMapReadyCallback
 import com.kt.maps.camera.CameraPositionOptions
 import com.kt.maps.sample.BaseActivity
 import com.kt.maps.sample.R
 import com.kt.maps.sample.databinding.ActivityGestureCameraBinding
-import com.kt.maps.sdk.KtMap
-import com.kt.maps.sdk.MapView
-import com.kt.maps.sdk.OnMapReadyCallback
 
 class GestureCameraActivity :
     BaseActivity<ActivityGestureCameraBinding>(R.layout.activity_gesture_camera),
@@ -31,7 +31,7 @@ class GestureCameraActivity :
             binding.zoomSliderValue.text = value.toString()
 
             map.easeTo(
-                CameraPositionOptions(zoom = value.toDouble()),
+                CameraPositionOptions(zoom = value),
                 duration = 70
             )
         }
@@ -40,7 +40,7 @@ class GestureCameraActivity :
             binding.bearingSliderValue.text = value.toString()
 
             map.easeTo(
-                CameraPositionOptions(bearing = value.toDouble()),
+                CameraPositionOptions(bearing = value),
                 duration = 70
             )
         }
@@ -49,7 +49,7 @@ class GestureCameraActivity :
             binding.pitchSliderValue.text = value.toString()
 
             map.easeTo(
-                CameraPositionOptions(pitch = value.toDouble()),
+                CameraPositionOptions(pitch = value),
                 duration = 70
             )
         }
@@ -77,9 +77,9 @@ class GestureCameraActivity :
         mapView.onStop()
     }
 
-    override fun onLowMemory() {
-        super.onLowMemory()
-        mapView.onLowMemory()
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
     }
 
     override fun onDestroy() {

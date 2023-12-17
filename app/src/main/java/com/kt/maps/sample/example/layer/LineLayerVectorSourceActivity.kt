@@ -8,25 +8,26 @@ import android.widget.ArrayAdapter
 import androidx.core.graphics.blue
 import androidx.core.graphics.green
 import androidx.core.graphics.red
+import com.kt.maps.KtMap
+import com.kt.maps.MapView
+import com.kt.maps.OnMapReadyCallback
 import com.kt.maps.camera.CameraPositionOptions
 import com.kt.maps.sample.BaseActivity
 import com.kt.maps.sample.R
 import com.kt.maps.sample.databinding.ActivityLineLayerVectorBinding
-import com.kt.maps.sdk.KtMap
-import com.kt.maps.sdk.MapView
-import com.kt.maps.sdk.OnMapReadyCallback
-import com.kt.maps.sdk.style.layers.LineLayer
-import com.kt.maps.sdk.style.sources.VectorSource
-import com.kt.maps.sdk.style.styles.LineStyleLayouts
-import com.kt.maps.sdk.style.styles.LineStylePaints
-import com.kt.maps.sdk.style.styles.LineStylePaints.LineColor
-import com.kt.maps.sdk.style.styles.LineStylePaints.LineOpacity
-import com.kt.maps.sdk.style.styles.LineStylePaints.LineWidth
 import com.kt.maps.style.ColorUtils
+import com.kt.maps.style.LayerFactory
+import com.kt.maps.style.layers.LineLayer
+import com.kt.maps.style.sources.VectorSource
 import com.kt.maps.style.sources.VectorSourceProperties
 import com.kt.maps.style.sources.VectorSourceProperties.Maxzoom
 import com.kt.maps.style.sources.VectorSourceProperties.Minzoom
 import com.kt.maps.style.sources.VectorSourceProperties.Tiles
+import com.kt.maps.style.styles.LineStyleLayouts
+import com.kt.maps.style.styles.LineStylePaints
+import com.kt.maps.style.styles.LineStylePaints.LineColor
+import com.kt.maps.style.styles.LineStylePaints.LineOpacity
+import com.kt.maps.style.styles.LineStylePaints.LineWidth
 
 class LineLayerVectorSourceActivity :
     BaseActivity<ActivityLineLayerVectorBinding>(R.layout.activity_line_layer_vector),
@@ -46,11 +47,11 @@ class LineLayerVectorSourceActivity :
     )
 
     private fun createLayer(source: VectorSource) =
-        LineLayer(source = source.id, sourceLayer = "wd2_bound_line_1004")
+        LayerFactory.line(source = source.id, sourceLayer = "wd2_bound_line_1004")
             .paint(
                 LineStylePaints(
                     LineColor("#ff0000"),
-                    LineOpacity(1.0f),
+                    LineOpacity(1f),
                     LineWidth(2)
                 )
             )
@@ -67,7 +68,7 @@ class LineLayerVectorSourceActivity :
 
     override fun onMapReady(ktmap: KtMap) {
         map = ktmap.apply {
-            jumpTo(cameraOptions = CameraPositionOptions().zoom(9.0))
+            jumpTo(cameraOptions = CameraPositionOptions().zoom(9f))
             addSource(source)
             addLayer(layer)
 
@@ -219,9 +220,9 @@ class LineLayerVectorSourceActivity :
         mapView.onStop()
     }
 
-    override fun onLowMemory() {
-        super.onLowMemory()
-        mapView.onLowMemory()
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
     }
 
     override fun onDestroy() {

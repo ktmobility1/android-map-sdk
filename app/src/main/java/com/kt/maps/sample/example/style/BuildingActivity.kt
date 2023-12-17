@@ -2,14 +2,14 @@ package com.kt.maps.sample.example.style
 
 import android.graphics.Color
 import android.os.Bundle
+import com.kt.maps.KtMap
+import com.kt.maps.MapView
+import com.kt.maps.OnMapReadyCallback
 import com.kt.maps.camera.CameraPositionOptions
 import com.kt.maps.geometry.LngLat
 import com.kt.maps.sample.BaseActivity
 import com.kt.maps.sample.R
 import com.kt.maps.sample.databinding.ActivityBuildingBinding
-import com.kt.maps.sdk.KtMap
-import com.kt.maps.sdk.MapView
-import com.kt.maps.sdk.OnMapReadyCallback
 
 class BuildingActivity :
     BaseActivity<ActivityBuildingBinding>(R.layout.activity_building), OnMapReadyCallback {
@@ -19,9 +19,10 @@ class BuildingActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mapView = binding.buildingMap
-        mapView.onCreate(savedInstanceState)
-        mapView.getMapAsync(this)
+        mapView = binding.buildingMap.apply {
+            onCreate(savedInstanceState)
+            getMapAsync(this@BuildingActivity)
+        }
     }
 
     override fun onMapReady(ktmap: KtMap) {
@@ -29,9 +30,9 @@ class BuildingActivity :
 
         map.jumpTo(
             cameraOptions = CameraPositionOptions(
-                pitch = 60.0,
-                bearing = 90.0,
-                zoom = 16.0,
+                pitch = 60f,
+                bearing = 90f,
+                zoom = 16f,
                 // 잠실역
                 lngLat = LngLat(127.10016448695572, 37.51329170850403)
             )
@@ -47,13 +48,11 @@ class BuildingActivity :
 
             // 건물 높이 비율 변경
             heightSlider.addOnChangeListener { _, value, _ ->
-                heightSliderValue.text = value.toString()
                 map.buildingLayerGroup.heightRatio = value
             }
 
             // 건물면 투명도 변경
             opacitySlider.addOnChangeListener { _, value, _ ->
-                opacitySliderValue.text = value.toString()
                 map.buildingLayerGroup.opacity = value
             }
 
@@ -77,11 +76,9 @@ class BuildingActivity :
 
             // 건물 높이 변경
             heightSlider.value = map.buildingLayerGroup.heightRatio
-            heightSliderValue.text = map.buildingLayerGroup.heightRatio.toString()
 
             // 건물면 투명도
             opacitySlider.value = map.buildingLayerGroup.opacity
-            opacitySliderValue.text = map.buildingLayerGroup.opacity.toString()
 
             // 건물면 색상
             colorRSlider.value = Color.red(map.buildingLayerGroup.color).toFloat()
@@ -120,9 +117,9 @@ class BuildingActivity :
         mapView.onStop()
     }
 
-    override fun onLowMemory() {
-        super.onLowMemory()
-        mapView.onLowMemory()
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
     }
 
     override fun onDestroy() {

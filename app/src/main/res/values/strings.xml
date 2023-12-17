@@ -204,9 +204,11 @@
     <string name="current_location_alpha">Alpha 50%</string>
 
     <!-- Path, Arrow overlay -->
+    <string name="path_text">path</string>
+    <string name="arrow_text">arrow</string>
     <string name="path">path</string>
-    <string name="path_next">next</string>
-    <string name="path_prev">prev</string>
+    <string name="arrow_next">next</string>
+    <string name="arrow_prev">prev</string>
     <string name="path_color">color</string>
 
     <!-- Animations -->

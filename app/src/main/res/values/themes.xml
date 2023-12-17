@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<!--    <style name="Theme.KtMapSample" parent="android:Theme.Material.Light.NoActionBar"/>-->
-    <style name="Theme.KtMapSample" parent="Theme.AppCompat.Light.NoActionBar"/>
+    <!--    <style name="Theme.KtMapSample" parent="android:Theme.Material.Light.NoActionBar"/>-->
+    <style name="Theme.KtMapSample" parent="Theme.AppCompat.Light.NoActionBar" />
+
     <style name="Theme.KtMapSample.actionbar" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/mint</item>
         <item name="colorPrimaryDark">#8AC2B7</item>

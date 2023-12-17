@@ -1,21 +1,22 @@
 package com.kt.maps.sample.example.style
 
 import android.os.Bundle
+import com.kt.maps.KtMap
+import com.kt.maps.MapView
+import com.kt.maps.OnMapReadyCallback
 import com.kt.maps.camera.CameraPositionOptions
 import com.kt.maps.gesture.addOnMapTapListener
 import com.kt.maps.sample.BaseActivity
 import com.kt.maps.sample.R
 import com.kt.maps.sample.databinding.ActivityPolygonLayerRemoteBinding
 import com.kt.maps.sample.ui.common.showSnackbar
-import com.kt.maps.sdk.KtMap
-import com.kt.maps.sdk.MapView
-import com.kt.maps.sdk.OnMapReadyCallback
-import com.kt.maps.sdk.style.layers.FillLayer
-import com.kt.maps.sdk.style.sources.GeojsonSource
-import com.kt.maps.sdk.style.styles.FillStylePaints
-import com.kt.maps.sdk.style.styles.FillStylePaints.FillColor
-import com.kt.maps.sdk.style.styles.FillStylePaints.FillOpacity
-import com.kt.maps.sdk.style.styles.FillStylePaints.FillOutlineColor
+import com.kt.maps.style.LayerFactory
+import com.kt.maps.style.layers.FillLayer
+import com.kt.maps.style.sources.GeojsonSource
+import com.kt.maps.style.styles.FillStylePaints
+import com.kt.maps.style.styles.FillStylePaints.FillColor
+import com.kt.maps.style.styles.FillStylePaints.FillOpacity
+import com.kt.maps.style.styles.FillStylePaints.FillOutlineColor
 import com.mapbox.geojson.FeatureCollection
 import java.net.URI
 import java.util.Collections
@@ -65,7 +66,7 @@ class QueryRenderedFeaturesActivity :
                 true
             }
 
-            jumpTo(cameraOptions = CameraPositionOptions(zoom = 10.0))
+            jumpTo(cameraOptions = CameraPositionOptions(zoom = 10f))
             addSource(source)
             addLayer(layer)
             addSource(highListSource)
@@ -79,7 +80,7 @@ class QueryRenderedFeaturesActivity :
         GeojsonSource(features = FeatureCollection.fromFeatures(Collections.emptyList()))
 
     private fun createLayer(source: GeojsonSource) =
-        FillLayer(source = source.id)
+        LayerFactory.fill(source = source.id)
             .paint(
                 FillStylePaints(
                     FillColor("#00ff00"),
@@ -89,7 +90,7 @@ class QueryRenderedFeaturesActivity :
             )
 
     private fun createHighLightLayer(source: GeojsonSource) =
-        FillLayer(source = source.id)
+        LayerFactory.fill(source = source.id)
             .paint(
                 FillStylePaints(
                     FillColor("#ff0000"),
@@ -118,9 +119,9 @@ class QueryRenderedFeaturesActivity :
         mapView.onStop()
     }
 
-    override fun onLowMemory() {
-        super.onLowMemory()
-        mapView.onLowMemory()
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
     }
 
     override fun onDestroy() {

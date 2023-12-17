@@ -1,17 +1,18 @@
 package com.kt.maps.sample.example.layer
 
 import android.os.Bundle
+import com.kt.maps.KtMap
+import com.kt.maps.MapView
+import com.kt.maps.OnMapReadyCallback
 import com.kt.maps.sample.BaseActivity
 import com.kt.maps.sample.R
 import com.kt.maps.sample.databinding.ActivityRasterLayerBinding
-import com.kt.maps.sdk.KtMap
-import com.kt.maps.sdk.MapView
-import com.kt.maps.sdk.OnMapReadyCallback
-import com.kt.maps.sdk.style.layers.RasterLayer
-import com.kt.maps.sdk.style.sources.RasterSource
-import com.kt.maps.sdk.style.styles.RasterStylePaints
-import com.kt.maps.sdk.style.styles.RasterStylePaints.RasterOpacity
+import com.kt.maps.style.LayerFactory
+import com.kt.maps.style.layers.RasterLayer
+import com.kt.maps.style.sources.RasterSource
 import com.kt.maps.style.sources.RasterSourceProperties
+import com.kt.maps.style.styles.RasterStylePaints
+import com.kt.maps.style.styles.RasterStylePaints.RasterOpacity
 
 class RasterLayerActivity :
     BaseActivity<ActivityRasterLayerBinding>(R.layout.activity_raster_layer),
@@ -47,7 +48,7 @@ class RasterLayerActivity :
         )
     )
 
-    private fun createLayer(source: RasterSource) = RasterLayer(source = source.id)
+    private fun createLayer(source: RasterSource) = LayerFactory.raster(source = source.id)
 
     override fun onMapReady(ktmap: KtMap) {
         map = ktmap.apply {
@@ -134,9 +135,9 @@ class RasterLayerActivity :
         mapView.onStop()
     }
 
-    override fun onLowMemory() {
-        super.onLowMemory()
-        mapView.onLowMemory()
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
     }
 
     override fun onDestroy() {

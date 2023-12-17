@@ -5,12 +5,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.kt.maps.sdk.MapView
+        <com.kt.maps.MapView
             android:id="@+id/map"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <LinearLayout android:layout_height="wrap_content"
+        <LinearLayout
+            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
@@ -26,42 +27,47 @@
                 android:layout_height="wrap_content"
                 android:text="@string/compass_enable"
                 android:checked="true"
-                app:switchPadding="10dp"/>
+                app:switchPadding="10dp" />
+
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/compass_center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:checked="false"
                 android:text="@string/compass_center"
-                app:switchPadding="10dp"/>
+                app:switchPadding="10dp" />
+
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/compass_margin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:checked="false"
                 android:text="@string/compass_margin"
-                app:switchPadding="10dp"/>
+                app:switchPadding="10dp" />
+
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/compass_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/compass_image"
                 android:checked="false"
-                app:switchPadding="10dp"/>
+                app:switchPadding="10dp" />
+
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/compass_alpha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:checked="false"
                 android:text="@string/compass_alpha"
-                app:switchPadding="10dp"/>
+                app:switchPadding="10dp" />
+
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/compass_tap"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:checked="false"
                 android:text="@string/compass_tap"
-                app:switchPadding="10dp"/>
+                app:switchPadding="10dp" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

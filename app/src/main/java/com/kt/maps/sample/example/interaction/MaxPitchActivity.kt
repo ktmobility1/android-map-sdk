@@ -1,13 +1,13 @@
 package com.kt.maps.sample.example.interaction
 
 import android.os.Bundle
+import com.kt.maps.KtMap
+import com.kt.maps.MapView
+import com.kt.maps.OnMapReadyCallback
 import com.kt.maps.camera.OnCameraChangeListener
 import com.kt.maps.sample.BaseActivity
 import com.kt.maps.sample.R
 import com.kt.maps.sample.databinding.ActivityMaxPitchBinding
-import com.kt.maps.sdk.KtMap
-import com.kt.maps.sdk.MapView
-import com.kt.maps.sdk.OnMapReadyCallback
 
 class MaxPitchActivity : BaseActivity<ActivityMaxPitchBinding>(R.layout.activity_max_pitch),
     OnMapReadyCallback {
@@ -23,7 +23,7 @@ class MaxPitchActivity : BaseActivity<ActivityMaxPitchBinding>(R.layout.activity
         mapView.getMapAsync(this)
 
         //set max pitch
-        mapView.ktMapOptions.maxPitch(50.0)
+        mapView.mapOptions.maxPitch(50f)
 
     }
 
@@ -70,9 +70,9 @@ class MaxPitchActivity : BaseActivity<ActivityMaxPitchBinding>(R.layout.activity
         mapView.onStop()
     }
 
-    override fun onLowMemory() {
-        super.onLowMemory()
-        mapView.onLowMemory()
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
     }
 
     override fun onDestroy() {

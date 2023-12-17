@@ -5,16 +5,17 @@ import android.os.Bundle
 import androidx.core.graphics.blue
 import androidx.core.graphics.green
 import androidx.core.graphics.red
+import com.kt.maps.KtMap
+import com.kt.maps.MapView
+import com.kt.maps.OnMapReadyCallback
 import com.kt.maps.sample.BaseActivity
 import com.kt.maps.sample.R
 import com.kt.maps.sample.databinding.ActivityBackgroundLayerBinding
-import com.kt.maps.sdk.KtMap
-import com.kt.maps.sdk.MapView
-import com.kt.maps.sdk.OnMapReadyCallback
-import com.kt.maps.sdk.style.layers.BackgroundLayer
-import com.kt.maps.sdk.style.styles.BackgroundStylePaints.BackgroundColor
-import com.kt.maps.sdk.style.styles.BackgroundStylePaints.BackgroundOpacity
 import com.kt.maps.style.ColorUtils
+import com.kt.maps.style.LayerFactory
+import com.kt.maps.style.layers.BackgroundLayer
+import com.kt.maps.style.styles.BackgroundStylePaints.BackgroundColor
+import com.kt.maps.style.styles.BackgroundStylePaints.BackgroundOpacity
 
 class BackgroundLayerActivity :
     BaseActivity<ActivityBackgroundLayerBinding>(R.layout.activity_background_layer),
@@ -24,7 +25,7 @@ class BackgroundLayerActivity :
     private lateinit var mapView: MapView
     private val layer: BackgroundLayer by lazy { createLayer() }
 
-    private fun createLayer() = BackgroundLayer()
+    private fun createLayer() = LayerFactory.background()
         .paint(
             BackgroundOpacity(0.5f),
             BackgroundColor("#ff0000")
@@ -113,9 +114,9 @@ class BackgroundLayerActivity :
         mapView.onStop()
     }
 
-    override fun onLowMemory() {
-        super.onLowMemory()
-        mapView.onLowMemory()
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
     }
 
     override fun onDestroy() {

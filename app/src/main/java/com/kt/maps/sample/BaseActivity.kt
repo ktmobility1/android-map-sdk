@@ -1,6 +1,5 @@
 package com.kt.maps.sample
 
-import android.R.*
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -25,7 +24,7 @@ abstract class BaseActivity<T : ViewDataBinding>(private val layoutResId: Int) :
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            id.home -> {
+            android.R.id.home -> {
                 finish()
                 true
             }

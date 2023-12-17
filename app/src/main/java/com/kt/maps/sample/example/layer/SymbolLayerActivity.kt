@@ -7,34 +7,35 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.content.res.AppCompatResources
 import com.google.gson.JsonObject
 import com.google.gson.JsonPrimitive
+import com.kt.maps.KtMap
+import com.kt.maps.MapView
+import com.kt.maps.OnMapReadyCallback
 import com.kt.maps.camera.CameraPositionOptions
 import com.kt.maps.geometry.LngLat
 import com.kt.maps.sample.BaseActivity
 import com.kt.maps.sample.R
 import com.kt.maps.sample.databinding.ActivitySymbolLayerBinding
-import com.kt.maps.sdk.KtMap
-import com.kt.maps.sdk.MapView
-import com.kt.maps.sdk.OnMapReadyCallback
-import com.kt.maps.sdk.style.layers.SymbolLayer
-import com.kt.maps.sdk.style.sources.GeojsonSource
-import com.kt.maps.sdk.style.styles.SymbolIconStyleLayouts
-import com.kt.maps.sdk.style.styles.SymbolIconStyleLayouts.IconAllowOverlap
-import com.kt.maps.sdk.style.styles.SymbolIconStyleLayouts.IconAnchor
-import com.kt.maps.sdk.style.styles.SymbolIconStyleLayouts.IconIgnorePlacement
-import com.kt.maps.sdk.style.styles.SymbolIconStyleLayouts.IconImage
-import com.kt.maps.sdk.style.styles.SymbolIconStyleLayouts.IconRotate
-import com.kt.maps.sdk.style.styles.SymbolIconStyleLayouts.IconSize
-import com.kt.maps.sdk.style.styles.SymbolIconStylePaints
-import com.kt.maps.sdk.style.styles.SymbolIconStylePaints.IconOpacity
-import com.kt.maps.sdk.style.styles.SymbolStyleLayouts
-import com.kt.maps.sdk.style.styles.SymbolStylePaints
-import com.kt.maps.sdk.style.styles.SymbolTextStyleLayouts
-import com.kt.maps.sdk.style.styles.SymbolTextStyleLayouts.TextAllowOverlap
-import com.kt.maps.sdk.style.styles.SymbolTextStyleLayouts.TextAnchor
-import com.kt.maps.sdk.style.styles.SymbolTextStyleLayouts.TextIgnorePlacement
-import com.kt.maps.sdk.style.styles.SymbolTextStyleLayouts.TextRotate
-import com.kt.maps.sdk.style.styles.SymbolTextStyleLayouts.TextSize
-import com.kt.maps.sdk.style.styles.SymbolTextStylePaints.TextOpacity
+import com.kt.maps.style.LayerFactory
+import com.kt.maps.style.layers.SymbolLayer
+import com.kt.maps.style.sources.GeojsonSource
+import com.kt.maps.style.styles.SymbolIconStyleLayouts
+import com.kt.maps.style.styles.SymbolIconStyleLayouts.IconAllowOverlap
+import com.kt.maps.style.styles.SymbolIconStyleLayouts.IconAnchor
+import com.kt.maps.style.styles.SymbolIconStyleLayouts.IconIgnorePlacement
+import com.kt.maps.style.styles.SymbolIconStyleLayouts.IconImage
+import com.kt.maps.style.styles.SymbolIconStyleLayouts.IconRotate
+import com.kt.maps.style.styles.SymbolIconStyleLayouts.IconSize
+import com.kt.maps.style.styles.SymbolIconStylePaints
+import com.kt.maps.style.styles.SymbolIconStylePaints.IconOpacity
+import com.kt.maps.style.styles.SymbolStyleLayouts
+import com.kt.maps.style.styles.SymbolStylePaints
+import com.kt.maps.style.styles.SymbolTextStyleLayouts
+import com.kt.maps.style.styles.SymbolTextStyleLayouts.TextAllowOverlap
+import com.kt.maps.style.styles.SymbolTextStyleLayouts.TextAnchor
+import com.kt.maps.style.styles.SymbolTextStyleLayouts.TextIgnorePlacement
+import com.kt.maps.style.styles.SymbolTextStyleLayouts.TextRotate
+import com.kt.maps.style.styles.SymbolTextStyleLayouts.TextSize
+import com.kt.maps.style.styles.SymbolTextStylePaints.TextOpacity
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
@@ -84,7 +85,7 @@ class SymbolLayerActivity :
     override fun onMapReady(ktmap: KtMap) {
         map = ktmap.apply {
             jumpTo(
-                cameraOptions = CameraPositionOptions().zoom(16.0).lngLat(
+                cameraOptions = CameraPositionOptions().zoom(16f).lngLat(
                     LngLat(longitude = 127.029414, latitude = 37.471401)
                 )
             )
@@ -106,13 +107,9 @@ class SymbolLayerActivity :
     }
 
     private fun createSource() = GeojsonSource(features = FeatureCollection.fromFeatures(FEATURES))
-    private fun createLayer(source: GeojsonSource) = SymbolLayer(source = source.id)
+    private fun createLayer(source: GeojsonSource) = LayerFactory.symbol(source = source.id)
         .paint(
-            SymbolStylePaints(
-                SymbolIconStylePaints(
-                    IconOpacity(0.9f)
-                )
-            )
+            SymbolStylePaints(iconStylePaints = SymbolIconStylePaints(IconOpacity(0.9f)))
         )
         .layout(
             SymbolStyleLayouts(
@@ -121,7 +118,7 @@ class SymbolLayerActivity :
                     IconSize(0.2f)
                 ),
                 textStyleLayouts = SymbolTextStyleLayouts(
-                    SymbolTextStyleLayouts.TextField(fieldName = TITLE_FEATURE_PROPERTY),
+                    SymbolTextStyleLayouts.TextFieldName(TITLE_FEATURE_PROPERTY),
                 )
             )
         )
@@ -246,11 +243,11 @@ class SymbolLayerActivity :
             }
         }
         binding.textSizeSlider.apply {
-            value = layer.layout.textStyleLayouts.textSize.value.toFloat()
+            value = layer.layout.textStyleLayouts.textSize.value
 
             addOnChangeListener { slider, value, fromUser ->
                 layer.layout(
-                    TextSize(value.toInt())
+                    TextSize(value)
                 )
             }
         }
@@ -289,9 +286,9 @@ class SymbolLayerActivity :
         mapView.onStop()
     }
 
-    override fun onLowMemory() {
-        super.onLowMemory()
-        mapView.onLowMemory()
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
     }
 
     override fun onDestroy() {

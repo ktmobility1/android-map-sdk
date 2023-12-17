@@ -6,7 +6,7 @@
 
         <variable
             name="activity"
-            type="com.kt.maps.sample.example.base.NormalMapActivity" />
+            type="com.kt.maps.sample.example.style.PatternFillLayerActivity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

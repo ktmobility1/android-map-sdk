@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import com.kt.maps.KtMap
+import com.kt.maps.KtMapOptions
+import com.kt.maps.MapView
+import com.kt.maps.OnMapReadyCallback
 import com.kt.maps.sample.BaseActivity
 import com.kt.maps.sample.R
 import com.kt.maps.sample.databinding.ActivityMaptypeBinding
-import com.kt.maps.sdk.KtMap
-import com.kt.maps.sdk.KtMapOptions
-import com.kt.maps.sdk.MapView
-import com.kt.maps.sdk.OnMapReadyCallback
 
 class MapTypeActivity : BaseActivity<ActivityMaptypeBinding>(R.layout.activity_maptype),
     OnMapReadyCallback {
@@ -26,8 +26,6 @@ class MapTypeActivity : BaseActivity<ActivityMaptypeBinding>(R.layout.activity_m
 
     override fun onMapReady(ktmap: KtMap) {
         map = ktmap
-        // MapType 기본값 적용
-        map.setMapType(KtMapOptions.MapType.values()[MAP_TYPE_INDEX])
 
         // MapType 선택을 위한 Spinner
         binding.spinnerMapType.apply {
@@ -38,7 +36,7 @@ class MapTypeActivity : BaseActivity<ActivityMaptypeBinding>(R.layout.activity_m
                 KtMapOptions.MapType.values()
             )
             // MapType 기본값 반영
-            setSelection(MAP_TYPE_INDEX)
+            setSelection(map.getMapType().ordinal)
 
             // spinner item 선택시 MapType 변경
             onItemSelectedListener =
@@ -79,17 +77,13 @@ class MapTypeActivity : BaseActivity<ActivityMaptypeBinding>(R.layout.activity_m
         mapView.onStop()
     }
 
-    override fun onLowMemory() {
-        super.onLowMemory()
-        mapView.onLowMemory()
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
     }
 
     override fun onDestroy() {
         super.onDestroy()
         mapView.onDestroy()
-    }
-
-    companion object {
-        const val MAP_TYPE_INDEX = 0
     }
 }

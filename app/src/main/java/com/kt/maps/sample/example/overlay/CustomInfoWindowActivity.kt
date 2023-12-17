@@ -5,6 +5,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import com.kt.maps.KtMap
+import com.kt.maps.MapView
+import com.kt.maps.OnMapReadyCallback
 import com.kt.maps.camera.CameraPositionOptions
 import com.kt.maps.geometry.LngLat
 import com.kt.maps.overlay.infowindow.InfoWindowAdapter
@@ -13,18 +16,22 @@ import com.kt.maps.overlay.marker.MarkerOptions
 import com.kt.maps.sample.BaseActivity
 import com.kt.maps.sample.R
 import com.kt.maps.sample.databinding.ActivityCustomInfowindowBinding
-import com.kt.maps.sdk.KtMap
-import com.kt.maps.sdk.OnMapReadyCallback
 import kotlin.random.Random
 
 class CustomInfoWindowActivity :
     BaseActivity<ActivityCustomInfowindowBinding>(R.layout.activity_custom_infowindow),
     OnMapReadyCallback {
     private lateinit var map: KtMap
+    private lateinit var mapView: MapView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.map.getMapAsync(this)
+
+        mapView = binding.map.apply {
+            onCreate(savedInstanceState)
+            getMapAsync(this@CustomInfoWindowActivity)
+        }
+
     }
 
     private val infoWindowAdapter = InfoWindowAdapter<Marker> { marker ->
@@ -45,7 +52,7 @@ class CustomInfoWindowActivity :
 
         map.apply {
             jumpTo(
-                cameraOptions = CameraPositionOptions().zoom(15.0)
+                cameraOptions = CameraPositionOptions().zoom(15f)
                     .lngLat(LngLat(longitude = 126.97794, latitude = 37.57103))
             )
 
@@ -69,6 +76,36 @@ class CustomInfoWindowActivity :
             marker2.isSelected = true
 
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mapView.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mapView.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mapView.onPause()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mapView.onStop()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mapView.onDestroy()
     }
 
     companion object {

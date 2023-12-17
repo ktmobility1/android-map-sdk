@@ -6,6 +6,9 @@ import android.graphics.Color
 import android.graphics.PointF
 import android.os.Bundle
 import androidx.appcompat.content.res.AppCompatResources
+import com.kt.maps.KtMap
+import com.kt.maps.MapView
+import com.kt.maps.OnMapReadyCallback
 import com.kt.maps.camera.CameraPositionOptions
 import com.kt.maps.geometry.LngLat
 import com.kt.maps.gesture.OnMapTapListener
@@ -17,8 +20,6 @@ import com.kt.maps.overlay.polygon.PolygonOverlayOptions
 import com.kt.maps.sample.BaseActivity
 import com.kt.maps.sample.R
 import com.kt.maps.sample.databinding.ActivityPolygonOverlayBinding
-import com.kt.maps.sdk.KtMap
-import com.kt.maps.sdk.OnMapReadyCallback
 import kotlin.random.Random
 
 class PolygonOverlayActivity :
@@ -27,6 +28,7 @@ class PolygonOverlayActivity :
     OnMapTapListener {
 
     private lateinit var map: KtMap
+    private lateinit var mapView: MapView
 
     private val outerPoints = mutableListOf<LngLat>()
     private val innerPoints = mutableListOf<LngLat>()
@@ -48,6 +50,8 @@ class PolygonOverlayActivity :
         outerBitmap = R.drawable.pin_red_dot.toBitmap()
 
         binding.run {
+            mapView = map
+            map.onCreate(savedInstanceState)
             map.getMapAsync(this@PolygonOverlayActivity)
             btnCreate.setOnClickListener { createPolygon() }
             btnRemove.setOnClickListener { removeLastPolygon() }
@@ -70,7 +74,7 @@ class PolygonOverlayActivity :
 
             jumpTo(
                 cameraOptions = CameraPositionOptions(
-                    zoom = 15.0,
+                    zoom = 15f,
                     lngLat = LngLat(longitude = 126.97794, latitude = 37.57103)
                 )
             )
@@ -215,6 +219,37 @@ class PolygonOverlayActivity :
             ClickMode.Outer -> outerBitmap
         }
     }
+
+    override fun onStart() {
+        super.onStart()
+        mapView.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mapView.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mapView.onPause()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mapView.onStop()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mapView.onDestroy()
+    }
+
 
     companion object {
         private val POLYGON_OVERLAY_1_LNGLATS = listOf(

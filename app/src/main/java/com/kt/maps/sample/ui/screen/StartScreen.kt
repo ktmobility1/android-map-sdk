@@ -186,8 +186,7 @@ private fun ContentColumn(
         modifier = modifier
             .fillMaxWidth()
     ) {
-        contents.forEach { (category, examples) ->
-
+        for ((category, examples) in contents) {
             stickyHeader {
                 StickyText(text = category)
             }

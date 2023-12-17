@@ -5,21 +5,21 @@ import android.os.Bundle
 import androidx.core.graphics.blue
 import androidx.core.graphics.green
 import androidx.core.graphics.red
+import com.kt.maps.KtMap
+import com.kt.maps.MapView
+import com.kt.maps.OnMapReadyCallback
 import com.kt.maps.camera.CameraPositionOptions
 import com.kt.maps.geometry.LngLat
 import com.kt.maps.sample.BaseActivity
 import com.kt.maps.sample.R
 import com.kt.maps.sample.databinding.ActivityFillLayerBinding
-import com.kt.maps.sdk.KtMap
-import com.kt.maps.sdk.MapView
-import com.kt.maps.sdk.OnMapReadyCallback
-import com.kt.maps.sdk.style.layers.FillLayer
-import com.kt.maps.sdk.style.sources.GeojsonSource
-import com.kt.maps.sdk.style.styles.FillStylePaints
-import com.kt.maps.sdk.style.styles.FillStylePaints.FillColor
-import com.kt.maps.sdk.style.styles.FillStylePaints.FillOpacity
-import com.kt.maps.sdk.style.styles.FillStylePaints.FillOutlineColor
 import com.kt.maps.style.ColorUtils
+import com.kt.maps.style.LayerFactory
+import com.kt.maps.style.layers.FillLayer
+import com.kt.maps.style.sources.GeojsonSource
+import com.kt.maps.style.styles.FillStylePaints.FillColor
+import com.kt.maps.style.styles.FillStylePaints.FillOpacity
+import com.kt.maps.style.styles.FillStylePaints.FillOutlineColor
 import com.mapbox.geojson.Point
 import com.mapbox.geojson.Polygon
 
@@ -44,12 +44,10 @@ class FillLayerActivity :
         )
     )
 
-    private fun createLayer(source: GeojsonSource) = FillLayer(source = source.id)
+    private fun createLayer(source: GeojsonSource) = LayerFactory.fill(source = source.id)
         .paint(
-            FillStylePaints(
-                FillColor("#ff0000"),
-                FillOpacity(0.6f)
-            )
+            FillColor("#ff0000"),
+            FillOpacity(0.6f)
         )
 
 
@@ -66,7 +64,7 @@ class FillLayerActivity :
         map = ktmap.apply {
             jumpTo(
                 cameraOptions = CameraPositionOptions(
-                    zoom = 16.0,
+                    zoom = 16f,
                     lngLat = LngLat(longitude = 127.017422, latitude = 37.49144)
                 )
             )
@@ -202,9 +200,9 @@ class FillLayerActivity :
         mapView.onStop()
     }
 
-    override fun onLowMemory() {
-        super.onLowMemory()
-        mapView.onLowMemory()
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
     }
 
     override fun onDestroy() {

@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.view.Gravity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
+import com.kt.maps.KtMap
+import com.kt.maps.MapView
+import com.kt.maps.OnMapReadyCallback
 import com.kt.maps.control.compass.compass
 import com.kt.maps.control.location.currentLocation
 import com.kt.maps.control.logo.logo
@@ -13,42 +16,51 @@ import com.kt.maps.control.zoom.zoomControls
 import com.kt.maps.sample.BaseActivity
 import com.kt.maps.sample.R
 import com.kt.maps.sample.databinding.ActivityZoomControlsBinding
-import com.kt.maps.sdk.KtMap
-import com.kt.maps.sdk.OnMapReadyCallback
 
 class ZoomControlsActivity :
     BaseActivity<ActivityZoomControlsBinding>(R.layout.activity_zoom_controls), OnMapReadyCallback {
 
     private lateinit var map: KtMap
+    private lateinit var mapView: MapView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding.map.getMapAsync(this)
+        mapView = binding.map.apply {
+            onCreate(savedInstanceState)
+            getMapAsync(this@ZoomControlsActivity)
+        }
     }
 
     override fun onMapReady(ktmap: KtMap) {
         map = ktmap.apply {
             //only zoomcontrols enable
             compass.enabled = false
-            zoomControls.enabled = true
+            zoomControls.enabled = binding.zoomControlsEnable.isChecked
             logo.enabled = false
             scaleBar.enabled = false
             currentLocation.enabled = false
             panControls.enabled = false
         }
 
-        val defaultTopMargin = map.zoomControls.marginTop
-        val defaultRightMargin = map.zoomControls.marginRight
-        val defaultZoomChange = map.zoomControls.zoomChangeAmount
+        var defaultTopMargin = map.zoomControls.marginTop
+        var defaultRightMargin = map.zoomControls.marginRight
+        var defaultZoomChange = map.zoomControls.zoomChangeAmount
+        if (binding.zoomControlsMargin.isChecked) {
+            defaultTopMargin /= 2
+            defaultRightMargin /= 2
+        }
+        if (binding.zoomControlsChange.isChecked) {
+            defaultZoomChange /= 3
+        }
 
         binding.zoomControlsEnable.setOnCheckedChangeListener { _, isChecked ->
             map.zoomControls.enabled = isChecked
         }
         binding.zoomControlsBottom.setOnCheckedChangeListener { _, isChecked ->
             map.zoomControls.gravity = if (isChecked) {
-                Gravity.BOTTOM or Gravity.RIGHT
+                Gravity.BOTTOM or Gravity.END
             } else {
-                Gravity.TOP or Gravity.RIGHT
+                Gravity.TOP or Gravity.END
             }
         }
         binding.zoomControlsMargin.setOnCheckedChangeListener { _, isChecked ->
@@ -123,5 +135,35 @@ class ZoomControlsActivity :
                 defaultZoomChange
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mapView.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mapView.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mapView.onPause()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mapView.onStop()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mapView.onDestroy()
     }
 }

@@ -43,7 +43,7 @@
 <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/> <!-- Always include this permission -->
 ```
 
-- 추가로 현재 위치 정보를 이용하기 위해서는 위치 정보에 대한 권한을 추가합니다.
+- 추가로 현재 위치 정보를 이용하기 위해서는 위치 정보에 대한 권한을 추가해야합니다.
 
 ```xml
 <uses-permission
@@ -57,9 +57,9 @@ android:name="android.permission.ACCESS_COARSE_LOCATION"/> <!-- Include only if 
 
 #### **`build.gradle.kt`**
 ```
-implementation("com.kt.maps:sdk:2.0.0-alpha2)
+implementation("com.kt.maps:sdk:2.0.0-alpha8)
 // Path,ArraowOverlay 사용
-implementation("com.kt.maps:extension-path:2.0.0-alpha2)
+implementation("com.kt.maps:extension-path:2.0.0-alpha8)
 ```
 
 ### Key 등록
@@ -77,7 +77,7 @@ implementation("com.kt.maps:extension-path:2.0.0-alpha2)
 
 #### **`layout/view_activity.xml`**
 ```xml
-<com.kt.maps.sdk.MapView
+<com.kt.maps.MapView
   android:id="@+id/map"
   android:layout_width="match_parent"
   android:layout_height="match_parent"/>

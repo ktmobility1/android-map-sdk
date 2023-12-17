@@ -1,53 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
-        <variable name="activity"
-            type="com.kt.maps.sample.example.overlay.PathActivity"/>
+
+        <variable
+            name="activity"
+            type="com.kt.maps.sample.example.overlay.PathActivity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.kt.maps.sdk.MapView
+        <com.kt.maps.MapView
             android:id="@+id/map"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="13dp"
+            android:orientation="vertical"
+            android:background="@drawable/basic_button_shape"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- path 설정 -->
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                >
-                <Button
-                    android:id="@+id/button_path_prev"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/path_prev"
-                    app:layout_constraintTop_toTopOf="parent"
+                android:text="@string/path_text"
+                android:textSize="15sp"
+                android:textColor="@color/dark_gray"
+                android:layout_marginTop="6dp"
+                android:textStyle="bold" />
 
-                    />
-
-                <Button
-                    android:id="@+id/button_path_next"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/path_next"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toRightOf="@+id/button_path_prev"
-                    />
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:padding="15dp"
+                android:background="@drawable/basic_button_shape"
+                android:orientation="vertical">
 
                 <Button
                     android:id="@+id/button_path_change_color"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/path_color"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toRightOf="@+id/button_path_next"
-                    />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:text="@string/path_color" />
+            </LinearLayout>
+
+            <!-- arrow 설정 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/arrow_text"
+                android:textSize="15sp"
+                android:textColor="@color/dark_gray"
+                android:layout_marginTop="6dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:padding="15dp"
+                android:background="@drawable/basic_button_shape"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/button_arrow_prev"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/arrow_prev" />
+
+                <Button
+                    android:id="@+id/button_arrow_next"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/arrow_next" />
+
+            </LinearLayout>
+        </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

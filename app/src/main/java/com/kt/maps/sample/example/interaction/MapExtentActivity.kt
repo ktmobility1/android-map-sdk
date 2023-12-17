@@ -2,6 +2,9 @@ package com.kt.maps.sample.example.interaction
 
 import android.graphics.Color
 import android.os.Bundle
+import com.kt.maps.KtMap
+import com.kt.maps.MapView
+import com.kt.maps.OnMapReadyCallback
 import com.kt.maps.camera.CameraPositionOptions
 import com.kt.maps.control.compass.compass
 import com.kt.maps.control.zoom.zoomControls
@@ -10,9 +13,6 @@ import com.kt.maps.overlay.polyline.PolylineOverlayOptions
 import com.kt.maps.sample.BaseActivity
 import com.kt.maps.sample.R
 import com.kt.maps.sample.databinding.ActivityMapExtentBinding
-import com.kt.maps.sdk.KtMap
-import com.kt.maps.sdk.MapView
-import com.kt.maps.sdk.OnMapReadyCallback
 
 class MapExtentActivity : BaseActivity<ActivityMapExtentBinding>(R.layout.activity_map_extent),
     OnMapReadyCallback {
@@ -36,7 +36,7 @@ class MapExtentActivity : BaseActivity<ActivityMapExtentBinding>(R.layout.activi
         map.apply {
             jumpTo(
                 cameraOptions = CameraPositionOptions(
-                    zoom = 6.0,
+                    zoom = 6f,
                     lngLat = LngLat(longitude = 127.773138, latitude = 36.61819)
                 )
             )
@@ -82,9 +82,9 @@ class MapExtentActivity : BaseActivity<ActivityMapExtentBinding>(R.layout.activi
         mapView.onStop()
     }
 
-    override fun onLowMemory() {
-        super.onLowMemory()
-        mapView.onLowMemory()
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
     }
 
     override fun onDestroy() {

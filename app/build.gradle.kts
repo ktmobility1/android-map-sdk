@@ -42,7 +42,7 @@ android {
 
 dependencies {
     // KT Map SDK
-    val KT_MAP_SDK_VERSION = "2.0.0-alpha2-SNAPSHOT"
+    val KT_MAP_SDK_VERSION = "2.0.0-alpha8"
     implementation("com.kt.maps:sdk:${KT_MAP_SDK_VERSION}")
     implementation("com.kt.maps:extension-path:${KT_MAP_SDK_VERSION}")
 

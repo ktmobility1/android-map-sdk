@@ -3,6 +3,9 @@ package com.kt.maps.sample.example.events
 import android.os.Bundle
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.kt.maps.KtMap
+import com.kt.maps.MapView
+import com.kt.maps.OnMapReadyCallback
 import com.kt.maps.gesture.OnFlingListener
 import com.kt.maps.gesture.OnPanListener
 import com.kt.maps.gesture.OnPitchListener
@@ -18,9 +21,6 @@ import com.kt.maps.sample.R
 import com.kt.maps.sample.databinding.ActivityAllGesturesEventBinding
 import com.kt.maps.sample.ui.common.GestureAlert
 import com.kt.maps.sample.ui.common.GestureAlertsAdapter
-import com.kt.maps.sdk.KtMap
-import com.kt.maps.sdk.MapView
-import com.kt.maps.sdk.OnMapReadyCallback
 
 class AllGestureEventActivity :
     BaseActivity<ActivityAllGesturesEventBinding>(R.layout.activity_all_gestures_event),
@@ -181,9 +181,9 @@ class AllGestureEventActivity :
         mapView.onStop()
     }
 
-    override fun onLowMemory() {
-        super.onLowMemory()
-        mapView.onLowMemory()
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
     }
 
     override fun onDestroy() {

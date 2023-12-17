@@ -5,6 +5,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import com.kt.maps.KtMap
+import com.kt.maps.MapView
+import com.kt.maps.OnMapReadyCallback
 import com.kt.maps.camera.CameraBoundsOptions
 import com.kt.maps.camera.CameraPositionOptions
 import com.kt.maps.geometry.LngLat
@@ -14,9 +17,6 @@ import com.kt.maps.sample.BaseActivity
 import com.kt.maps.sample.R
 import com.kt.maps.sample.databinding.ActivityFitboundsCameraBinding
 import com.kt.maps.sample.ui.common.showSnackbar
-import com.kt.maps.sdk.KtMap
-import com.kt.maps.sdk.MapView
-import com.kt.maps.sdk.OnMapReadyCallback
 
 class FitBoundsCameraActivity :
     BaseActivity<ActivityFitboundsCameraBinding>(R.layout.activity_fitbounds_camera),
@@ -24,7 +24,7 @@ class FitBoundsCameraActivity :
 
     companion object {
         // 인천 공항
-        val START_OPTIONS = CameraPositionOptions(lngLat = LngLat(126.4513, 37.4493), zoom = 11.0)
+        val START_OPTIONS = CameraPositionOptions(lngLat = LngLat(126.4513, 37.4493), zoom = 11f)
 
         val boundsMap = mapOf(
             "seoul" to listOf(
@@ -87,30 +87,37 @@ class FitBoundsCameraActivity :
                     }.build()
                 )
             }
-
-            // 지도 초기 위치 이동
-            jumpTo(cameraOptions = START_OPTIONS)
+            moveInitMap()
         }
+    }
+
+    private fun moveInitMap() {
+        // 지도 초기 위치 이동
+        map.jumpTo(cameraOptions = START_OPTIONS)
     }
 
     /**
      * 지도 이동 버튼 초기화
      */
     private fun initFab() {
-        binding.buttonCameraMove.setOnClickListener {
-            val key = resources.getStringArray(R.array.fit_bounds_array)[selectedIndex]
+        binding.buttonCameraMove.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                moveInitMap()
+                mapView.showSnackbar("camera init")
+            } else {
+                val key = resources.getStringArray(R.array.fit_bounds_array)[selectedIndex]
 
-            if (boundsMap.containsKey(key)) {
-                boundsMap[key]?.let { lngLats ->
-                    map.flyTo(
-                        cameraOptions = CameraBoundsOptions(
-                            bounds = LngLatBounds.fromLngLats(lngLats)
+                if (boundsMap.containsKey(key)) {
+                    boundsMap[key]?.let { lngLats ->
+                        map.flyTo(
+                            cameraOptions = CameraBoundsOptions(
+                                bounds = LngLatBounds.fromLngLats(lngLats)
+                            )
                         )
-                    )
+                    }
                 }
+                mapView.showSnackbar("camera bounds: $key")
             }
-
-            mapView.showSnackbar("camera bounds: $key")
         }
     }
 
@@ -142,12 +149,9 @@ class FitBoundsCameraActivity :
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         // 지도 이동 animation type 변경
         selectedIndex = position
-        initMap()
     }
 
-    override fun onNothingSelected(parent: AdapterView<*>?) {
-        initMap()
-    }
+    override fun onNothingSelected(parent: AdapterView<*>?) {}
 
     override fun onStart() {
         super.onStart()
@@ -169,9 +173,9 @@ class FitBoundsCameraActivity :
         mapView.onStop()
     }
 
-    override fun onLowMemory() {
-        super.onLowMemory()
-        mapView.onLowMemory()
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
     }
 
     override fun onDestroy() {

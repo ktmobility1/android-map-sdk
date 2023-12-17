@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.util.TypedValue
 import android.view.Gravity
 import androidx.core.content.ContextCompat
+import com.kt.maps.KtMap
+import com.kt.maps.MapView
+import com.kt.maps.OnMapReadyCallback
 import com.kt.maps.control.compass.compass
 import com.kt.maps.control.location.currentLocation
 import com.kt.maps.control.logo.logo
@@ -13,18 +16,20 @@ import com.kt.maps.control.zoom.zoomControls
 import com.kt.maps.sample.BaseActivity
 import com.kt.maps.sample.R
 import com.kt.maps.sample.databinding.ActivityScaleBarBinding
-import com.kt.maps.sdk.KtMap
-import com.kt.maps.sdk.OnMapReadyCallback
 
 class ScaleBarActivity : BaseActivity<ActivityScaleBarBinding>(R.layout.activity_scale_bar),
     OnMapReadyCallback {
 
     private lateinit var map: KtMap
+    private lateinit var mapView: MapView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding.map.getMapAsync(this)
+        mapView = binding.map.apply {
+            onCreate(savedInstanceState)
+            getMapAsync(this@ScaleBarActivity)
+        }
     }
 
     override fun onMapReady(ktmap: KtMap) {
@@ -33,13 +38,18 @@ class ScaleBarActivity : BaseActivity<ActivityScaleBarBinding>(R.layout.activity
             compass.enabled = false
             zoomControls.enabled = false
             logo.enabled = false
-            scaleBar.enabled = true
             currentLocation.enabled = false
             panControls.enabled = false
         }
 
-        val defaultBottomMargin = map.scaleBar.marginBottom
-        val defaultRightMargin = map.scaleBar.marginRight
+        map.scaleBar.enabled = binding.scaleBarEnable.isChecked
+
+        var defaultBottomMargin = map.scaleBar.marginBottom
+        var defaultRightMargin = map.scaleBar.marginRight
+        if (binding.scaleBarMargin.isChecked) {
+            defaultBottomMargin /= 2
+            defaultRightMargin /= 2
+        }
 
         binding.scaleBarEnable.setOnCheckedChangeListener { _, isChecked ->
             map.scaleBar.enabled = isChecked
@@ -109,5 +119,35 @@ class ScaleBarActivity : BaseActivity<ActivityScaleBarBinding>(R.layout.activity
             }
             map.scaleBar.setMarginBetweenTextAndBar(pixel)
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mapView.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mapView.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mapView.onPause()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mapView.onStop()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mapView.onDestroy()
     }
 }

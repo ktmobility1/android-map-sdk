@@ -2,6 +2,9 @@ package com.kt.maps.sample.example.events
 
 import android.graphics.Color
 import android.os.Bundle
+import com.kt.maps.KtMap
+import com.kt.maps.MapView
+import com.kt.maps.OnMapReadyCallback
 import com.kt.maps.camera.CameraPositionOptions
 import com.kt.maps.geometry.LngLat
 import com.kt.maps.overlay.marker.MarkerOptions
@@ -11,9 +14,6 @@ import com.kt.maps.sample.BaseActivity
 import com.kt.maps.sample.R
 import com.kt.maps.sample.databinding.ActivityOverlayEventBinding
 import com.kt.maps.sample.ui.common.showSnackbar
-import com.kt.maps.sdk.KtMap
-import com.kt.maps.sdk.MapView
-import com.kt.maps.sdk.OnMapReadyCallback
 
 class OverlayEventActivity :
     BaseActivity<ActivityOverlayEventBinding>(R.layout.activity_overlay_event),
@@ -50,7 +50,7 @@ class OverlayEventActivity :
         map = ktmap.apply {
             jumpTo(
                 cameraOptions = CameraPositionOptions(
-                    zoom = 14.0,
+                    zoom = 14f,
                     lngLat = LngLat(longitude = 126.97794, latitude = 37.57103)
                 )
             )
@@ -80,30 +80,27 @@ class OverlayEventActivity :
             )
 
             setOnMarkerTapListener {
-                mapView.showSnackbar("Marker taped (ID : ${it.id})")
+                mapView.showSnackbar("Marker tapped (ID : ${it.id})")
                 false
             }
 
             setOnPolylineOverlayTapListener {
-                mapView.showSnackbar("PolylineOverlay taped (ID : ${it.id})")
+                mapView.showSnackbar("PolylineOverlay tapped (ID : ${it.id})")
             }
 
             setOnPolygonOverlayTapListener {
-                mapView.showSnackbar("PolygonOverlay taped (ID : ${it.id})")
+                mapView.showSnackbar("PolygonOverlay tapped (ID : ${it.id})")
             }
 
             setOnInfoWindowTapListener {
-                mapView.showSnackbar("InfoWindow Taped (ID : ${it.id})")
-                false
+                mapView.showSnackbar("InfoWindow tapped (ID : ${it.id})")
+                true
             }
 
             setOnInfoWindowLongClickListener {
                 mapView.showSnackbar("InfoWindow Long Clicked (ID : ${it.id})")
             }
 
-            setOnInfoWindowCloseListener {
-                mapView.showSnackbar("InfoWindow Closed (ID : ${it.id})")
-            }
         }
     }
 
@@ -127,9 +124,9 @@ class OverlayEventActivity :
         mapView.onStop()
     }
 
-    override fun onLowMemory() {
-        super.onLowMemory()
-        mapView.onLowMemory()
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
     }
 
     override fun onDestroy() {
