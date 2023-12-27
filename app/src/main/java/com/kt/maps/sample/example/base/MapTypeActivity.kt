@@ -16,8 +16,10 @@ class MapTypeActivity : BaseActivity<ActivityMaptypeBinding>(R.layout.activity_m
     OnMapReadyCallback {
     private lateinit var map: KtMap
     private lateinit var mapView: MapView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         mapView = binding.map.apply {
             onCreate(savedInstanceState)
             getMapAsync(this@MapTypeActivity)
@@ -27,18 +29,18 @@ class MapTypeActivity : BaseActivity<ActivityMaptypeBinding>(R.layout.activity_m
     override fun onMapReady(ktmap: KtMap) {
         map = ktmap
 
-        // MapType 선택을 위한 Spinner
-        binding.spinnerMapType.apply {
-            // MapType item 설정
+        // 지도 타입 선택을 위한 Spinner
+        binding.spinnerMapType.run {
+            // 지도 타입 item 설정
             adapter = ArrayAdapter(
                 this@MapTypeActivity,
                 androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
                 KtMapOptions.MapType.values()
             )
-            // MapType 기본값 반영
+            // 지도 타입 기본값으로 반영
             setSelection(map.getMapType().ordinal)
 
-            // spinner item 선택시 MapType 변경
+            // spinner item 선택시 지도 타입 변경
             onItemSelectedListener =
                 object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(

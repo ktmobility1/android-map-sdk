@@ -46,7 +46,7 @@ class ScaleBarActivity : BaseActivity<ActivityScaleBarBinding>(R.layout.activity
 
         var defaultBottomMargin = map.scaleBar.marginBottom
         var defaultRightMargin = map.scaleBar.marginRight
-        if (binding.scaleBarMargin.isChecked) {
+        if(binding.scaleBarMargin.isChecked) {
             defaultBottomMargin /= 2
             defaultRightMargin /= 2
         }

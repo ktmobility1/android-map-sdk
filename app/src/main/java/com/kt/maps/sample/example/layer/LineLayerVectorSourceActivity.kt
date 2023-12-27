@@ -38,20 +38,32 @@ class LineLayerVectorSourceActivity :
     private val source: VectorSource by lazy { createSource() }
     private val layer: LineLayer by lazy { createLayer(source) }
 
+    /**
+     * 벡터 데이터 소스 초기화 및 생성
+     */
     private fun createSource() = VectorSource(
         options = VectorSourceProperties(
+            // 벡터 타일 URL 설정
             Tiles(arrayOf("https://tile.gis.kt.com/image/mvt_9/{z}/{x}/{y}.pbf")),
+            // 벡터 데이터를 표출할 최소 지도 줌레벨 설정
             Minzoom(6),
+            // 벡터 데이터를 표출할 최대 지도 줌레벨 설정
             Maxzoom(10)
         )
     )
 
+    /**
+     * 벡터 데이터 소스에 대한 레이어 초기화 및 생성
+     */
     private fun createLayer(source: VectorSource) =
         LayerFactory.line(source = source.id, sourceLayer = "wd2_bound_line_1004")
             .paint(
                 LineStylePaints(
+                    // 색상 설정
                     LineColor("#ff0000"),
+                    // 색상 투명도 설정
                     LineOpacity(1f),
+                    // 색상 두께 설정
                     LineWidth(2)
                 )
             )
@@ -80,6 +92,9 @@ class LineLayerVectorSourceActivity :
         }
     }
 
+    /**
+     * 레이어 투명도 조정을 위한 slider 초기화
+     */
     private fun initOpacity() {
         binding.opacitySlider.apply {
             value = layer.paint.lineOpacity.value
@@ -89,6 +104,9 @@ class LineLayerVectorSourceActivity :
         }
     }
 
+    /**
+     * 레이어 LineCap(선끝 처리) 변경을 위한 spinner 초기화
+     */
     private fun initLineCap() {
         binding.lineCapSpinner.apply {
             adapter = ArrayAdapter(
@@ -105,6 +123,9 @@ class LineLayerVectorSourceActivity :
         }
     }
 
+    /**
+     * 레이어 LineJoin(선 연결 처리) 변경을 위한 spinner 초기화
+     */
     private fun initLineJoin() {
         binding.lineJoinSpinner.apply {
             adapter = ArrayAdapter(
@@ -121,30 +142,14 @@ class LineLayerVectorSourceActivity :
         }
     }
 
-//    private fun initLineTranslateAnchor() {
-//        binding.lineTranslateAnchorSpinner.apply {
-//            adapter = ArrayAdapter(
-//                this@LineLayerVectorSourceActivity,
-//                android.R.layout.simple_spinner_item,
-//                LineStylePaints.LineTranslateAnchor.values()
-//            ).also { adapter ->
-//                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//            }
-//            setSelection(layer.paint.lineTranslateAnchor.ordinal)
-//
-//            // spinner item 선택시 animation type 변경
-//            onItemSelectedListener = this@LineLayerVectorSourceActivity
-//        }
-//    }
-
     /**
+     * spinner item 설정 처리를 위한 리스너
      */
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
         when (parent) {
             binding.lineCapSpinner -> layer.layout(LineStyleLayouts.LineCap.values()[position])
             binding.lineJoinSpinner -> layer.layout(LineStyleLayouts.LineJoin.values()[position])
-            //binding.lineTranslateAnchorSpinner -> layer.paint(LineStylePaints.LineTranslateAnchor.values()[position])
         }
 
     }
@@ -154,6 +159,9 @@ class LineLayerVectorSourceActivity :
     }
 
 
+    /**
+     * 레이어 선형 두께 조정을 위한 slider 초기화
+     */
     private fun initWidth() {
         binding.widthSlider.apply {
             value = layer.paint.lineWidth.value.toFloat()
@@ -163,23 +171,29 @@ class LineLayerVectorSourceActivity :
         }
     }
 
+    /**
+     * 레이어 색상 조정을 위한 slider 초기화
+     */
     private fun initColor() {
         // 색상 변경
         binding.run {
             val color = Color.parseColor(layer.paint.lineColor.value)
 
+            // RED 색상 변경 적용
             colorRSlider.apply {
                 value = color.red.toFloat()
                 addOnChangeListener { _, _, _ ->
                     updateColor()
                 }
             }
+            // GREEN 색상 변경 적용
             colorGSlider.apply {
                 value = color.green.toFloat()
                 addOnChangeListener { _, _, _ ->
                     updateColor()
                 }
             }
+            // BLUE 색상 변경 적용
             colorBSlider.apply {
                 value = color.blue.toFloat()
                 addOnChangeListener { _, _, _ ->
@@ -189,6 +203,9 @@ class LineLayerVectorSourceActivity :
         }
     }
 
+    /**
+     * RGB slider에 적용된 값을 배경 레이어 색에 적용한다.
+     */
     private fun updateColor() {
         binding.run {
             val r = colorRSlider.value.toInt()

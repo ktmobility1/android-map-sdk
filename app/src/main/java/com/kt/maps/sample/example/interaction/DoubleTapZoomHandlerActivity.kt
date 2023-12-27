@@ -32,13 +32,15 @@ class DoubleTapZoomHandlerActivity :
 
     override fun onMapReady(ktmap: KtMap) {
         map = ktmap.apply {
+            // Controls 사용 여부 설정
             currentLocation.enabled = false
             zoomControls.enabled = false
             panControls.enabled = false
         }
 
-        // switch button 상태에 따라 gesture settings 설정
+        // switch button 상태에 따라 제스쳐 설정
         binding.zoomToggleButton.setOnCheckedChangeListener { _, isChecked ->
+            // Double Tap 제스쳐 활성화 설정: 활성화 되면 Double Tap 시 지도 확대 된다.
             map.gestureSettings.doubleTapEnabled = isChecked
         }
     }

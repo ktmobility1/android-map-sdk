@@ -45,11 +45,11 @@ class ZoomControlsActivity :
         var defaultTopMargin = map.zoomControls.marginTop
         var defaultRightMargin = map.zoomControls.marginRight
         var defaultZoomChange = map.zoomControls.zoomChangeAmount
-        if (binding.zoomControlsMargin.isChecked) {
+        if(binding.zoomControlsMargin.isChecked) {
             defaultTopMargin /= 2
             defaultRightMargin /= 2
         }
-        if (binding.zoomControlsChange.isChecked) {
+        if(binding.zoomControlsChange.isChecked) {
             defaultZoomChange /= 3
         }
 

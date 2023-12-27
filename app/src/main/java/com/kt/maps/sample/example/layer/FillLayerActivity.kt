@@ -31,6 +31,9 @@ class FillLayerActivity :
     private val source: GeojsonSource by lazy { createSource() }
     private val layer: FillLayer by lazy { createLayer(source) }
 
+    /**
+     * 데이터 소스 초기화 및 생성
+     */
     private fun createSource() = GeojsonSource(
         geometry = Polygon.fromLngLats(
             listOf(
@@ -44,9 +47,14 @@ class FillLayerActivity :
         )
     )
 
+    /**
+     * 데이터 소스를 통해 Fill 레이어 스타일 초기화 및 생성
+     */
     private fun createLayer(source: GeojsonSource) = LayerFactory.fill(source = source.id)
         .paint(
+            // 색상 설정
             FillColor("#ff0000"),
+            // 투명도 설정
             FillOpacity(0.6f)
         )
 
@@ -77,8 +85,12 @@ class FillLayerActivity :
         }
     }
 
+    /**
+     * 레이어 투명도 조정을 위한 slider 초기화
+     */
     private fun initOpacity() {
         binding.opacitySlider.apply {
+            // 레이어에 적용되어 있는 투명도로 slider 값 초기화
             value = layer.paint.fillOpacity.value
             addOnChangeListener { _, value, _ ->
                 layer.paint(FillOpacity(value))
@@ -86,23 +98,29 @@ class FillLayerActivity :
         }
     }
 
+    /**
+     * 레이어 색상 조정을 위한 slider 초기화
+     */
     private fun initColor() {
         // 색상 변경
         binding.run {
             val color = Color.parseColor(layer.paint.fillColor.value)
 
+            // RED 색상 변경 적용
             colorRSlider.apply {
                 value = color.red.toFloat()
                 addOnChangeListener { _, _, _ ->
                     updateColor()
                 }
             }
+            // GREEN 색상 변경 적용
             colorGSlider.apply {
                 value = color.green.toFloat()
                 addOnChangeListener { _, _, _ ->
                     updateColor()
                 }
             }
+            // BLUE 색상 변경 적용
             colorBSlider.apply {
                 value = color.blue.toFloat()
                 addOnChangeListener { _, _, _ ->
@@ -112,6 +130,9 @@ class FillLayerActivity :
         }
     }
 
+    /**
+     * RGB slider에 적용된 값을 레이어 색에 적용한다.
+     */
     private fun updateColor() {
         binding.run {
             val r = colorRSlider.value.toInt()
@@ -123,6 +144,9 @@ class FillLayerActivity :
         }
     }
 
+    /**
+     * RGB slider에 적용된 값을 레이어 외곽선 색에 적용한다.
+     */
     private fun updateOutlineColor() {
         binding.run {
             val r = outlineColorRSlider.value.toInt()
@@ -134,6 +158,9 @@ class FillLayerActivity :
         }
     }
 
+    /**
+     * 외곽선 조정 위한 버튼을 초기화한다.
+     */
     private fun initOutlineColor() {
         binding.run {
             val enabled = layer.paint.fillOutlineColor != null
@@ -148,6 +175,9 @@ class FillLayerActivity :
         }
     }
 
+    /**
+     * 외곽선 색 활성화 여부 조정을 위한 slider를 초기화한다.
+     */
     private fun initOutlineColorEnabled(enabled: Boolean) {
         if (enabled) {
             // 색상 변경

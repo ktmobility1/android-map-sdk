@@ -25,9 +25,14 @@ class BackgroundLayerActivity :
     private lateinit var mapView: MapView
     private val layer: BackgroundLayer by lazy { createLayer() }
 
+    /**
+     * 배경 레이버 초기화 후 생성
+     */
     private fun createLayer() = LayerFactory.background()
         .paint(
+            // 투명도 설정
             BackgroundOpacity(0.5f),
+            // 색상 설정
             BackgroundColor("#ff0000")
         )
 
@@ -48,6 +53,9 @@ class BackgroundLayerActivity :
         initColor()
     }
 
+    /**
+     * 배경 투명도 조정 하기 위한 slider 초기화
+     */
     private fun initOpacity() {
         binding.opacitySlider.run {
             value = layer.paint.backgroundOpacity.value
@@ -57,23 +65,29 @@ class BackgroundLayerActivity :
         }
     }
 
+    /**
+     * 배경 색상 조정 하기 위한 slider 초기화
+     */
     private fun initColor() {
         // 색상 변경
         binding.run {
             val color = Color.parseColor(layer.paint.backgroundColor.value)
 
+            // RED 색상 변경 적용
             colorRSlider.apply {
                 value = color.red.toFloat()
                 addOnChangeListener { _, _, _ ->
                     updateColor()
                 }
             }
+            // Green 색상 변경 적용
             colorGSlider.apply {
                 value = color.green.toFloat()
                 addOnChangeListener { _, _, _ ->
                     updateColor()
                 }
             }
+            // Blue 색상 변경 적용
             colorBSlider.apply {
                 value = color.blue.toFloat()
                 addOnChangeListener { _, _, _ ->
@@ -83,6 +97,9 @@ class BackgroundLayerActivity :
         }
     }
 
+    /**
+     * RGB slider에 적용된 값을 배경 레이어 색에 적용한다.
+     */
     private fun updateColor() {
         binding.run {
             val r = colorRSlider.value.toInt()

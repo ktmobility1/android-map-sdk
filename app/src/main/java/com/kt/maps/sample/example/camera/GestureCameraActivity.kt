@@ -19,14 +19,16 @@ class GestureCameraActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mapView = binding.cameraMap
-        mapView.onCreate(savedInstanceState)
-        mapView.getMapAsync(this)
+        mapView = binding.cameraMap.apply {
+            onCreate(savedInstanceState)
+            getMapAsync(this@GestureCameraActivity)
+        }
     }
 
     override fun onMapReady(ktmap: KtMap) {
         map = ktmap
 
+        // 지도 줌 레벨을 변경하기 위한 slider
         binding.zoomSlider.addOnChangeListener { _, value, _ ->
             binding.zoomSliderValue.text = value.toString()
 
@@ -36,6 +38,7 @@ class GestureCameraActivity :
             )
         }
 
+        // 지도 방향을 변경하기 위한 slider
         binding.bearingSlider.addOnChangeListener { _, value, _ ->
             binding.bearingSliderValue.text = value.toString()
 
@@ -45,6 +48,7 @@ class GestureCameraActivity :
             )
         }
 
+        // 지도 기울기를 변경하기 위한 slider
         binding.pitchSlider.addOnChangeListener { _, value, _ ->
             binding.pitchSliderValue.text = value.toString()
 
@@ -53,8 +57,6 @@ class GestureCameraActivity :
                 duration = 70
             )
         }
-
-
     }
 
     override fun onStart() {

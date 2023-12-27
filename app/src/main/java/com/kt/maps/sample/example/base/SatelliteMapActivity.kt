@@ -17,14 +17,17 @@ class SatelliteMapActivity : BaseActivity<ActivityNormalMapBinding>(R.layout.act
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mapView = binding.map
-        mapView.onCreate(savedInstanceState)
-        mapView.getMapAsync(this)
+        mapView = binding.map.apply {
+            onCreate(savedInstanceState)
+            getMapAsync(this@SatelliteMapActivity)
+        }
     }
 
     override fun onMapReady(ktmap: KtMap) {
-        map = ktmap
-        map.setMapType(KtMapOptions.MapType.SATELLITE)
+        map = ktmap.apply {
+            // 지도 타입 위성으로 설정
+            setMapType(KtMapOptions.MapType.SATELLITE)
+        }
     }
 
     override fun onStart() {

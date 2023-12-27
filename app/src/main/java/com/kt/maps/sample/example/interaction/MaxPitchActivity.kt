@@ -18,36 +18,36 @@ class MaxPitchActivity : BaseActivity<ActivityMaxPitchBinding>(R.layout.activity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mapView = binding.map
-        mapView.onCreate(savedInstanceState)
-        mapView.getMapAsync(this)
-
-        //set max pitch
-        mapView.mapOptions.maxPitch(50f)
-
+        mapView = binding.map.apply {
+            onCreate(savedInstanceState)
+            getMapAsync(this@MaxPitchActivity)
+            //set max pitch
+            mapOptions.maxPitch(50f)
+        }
     }
 
     override fun onMapReady(ktmap: KtMap) {
-        map = ktmap
+        map = ktmap.apply {
+            // 지도 카메라 변경에 대한 리스너를 등록한다.
+            addOnCameraChangedListener(
+                object : OnCameraChangeListener {
+                    override fun onCameraMoveStarted(reason: OnCameraChangeListener.REASON) {
+                        binding.pitchLevelText.text =
+                            getString(R.string.format_double, map.getCameraPosition().pitch)
+                    }
 
-        map.addOnCameraChangedListener(
-            object : OnCameraChangeListener {
-                override fun onCameraMoveStarted(reason: OnCameraChangeListener.REASON) {
-                    binding.pitchLevelText.text =
-                        getString(R.string.format_double, map.getCameraPosition().pitch)
-                }
+                    override fun onCameraMoveCanceled() {
+                        binding.pitchLevelText.text =
+                            getString(R.string.format_double, map.getCameraPosition().pitch)
+                    }
 
-                override fun onCameraMoveCanceled() {
-                    binding.pitchLevelText.text =
-                        getString(R.string.format_double, map.getCameraPosition().pitch)
+                    override fun onCameraMove() {
+                        binding.pitchLevelText.text =
+                            getString(R.string.format_double, map.getCameraPosition().pitch)
+                    }
                 }
-
-                override fun onCameraMove() {
-                    binding.pitchLevelText.text =
-                        getString(R.string.format_double, map.getCameraPosition().pitch)
-                }
-            }
-        )
+            )
+        }
     }
 
     override fun onStart() {

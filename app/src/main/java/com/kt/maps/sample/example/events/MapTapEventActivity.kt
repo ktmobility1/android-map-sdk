@@ -29,6 +29,7 @@ class MapTapEventActivity :
 
     override fun onMapReady(ktmap: KtMap) {
         map = ktmap.apply {
+            // 지도 Tap 이벤트 처리 하기 위한 리스너 등록
             addOnMapTapListener { point, lngLat ->
                 mapView.showSnackbar(
                     R.string.format_map_tap,
@@ -40,6 +41,7 @@ class MapTapEventActivity :
                 true
             }
 
+            // 지도 LongPress 이벤트 처리 하기 위한 리스너 등록
             addOnMapLongPressListener { point, lngLat ->
                 mapView.showSnackbar(
                     R.string.format_map_long_press,

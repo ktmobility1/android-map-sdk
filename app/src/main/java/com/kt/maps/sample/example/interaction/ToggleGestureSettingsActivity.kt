@@ -33,24 +33,30 @@ class ToggleGestureSettingsActivity :
             zoomControls.enabled = false
         }
 
+        // toggle 버튼 제스쳐 활성화 여부 리스너 등록
         binding.run {
             zoomToggle.setOnCheckedChangeListener { _, isChecked ->
+                // 지도 줌 제스쳐 활성화 여부
                 ktmap.gestureSettings.zoomEnabled = isChecked
             }
 
             pitchToggle.setOnCheckedChangeListener { _, isChecked ->
+                // 지도 기울기 제스쳐 활성화 여부
                 ktmap.gestureSettings.pitchEnabled = isChecked
             }
 
             rotateToggle.setOnCheckedChangeListener { _, isChecked ->
+                // 지도 회전 제스쳐 활성화 여부
                 ktmap.gestureSettings.rotateEnabled = isChecked
             }
 
             panToggle.setOnCheckedChangeListener { _, isChecked ->
+                // 지도 이동 제스쳐 활성화 여부
                 ktmap.gestureSettings.panEnabled = isChecked
             }
 
             horizontalPanToggle.setOnCheckedChangeListener { _, isChecked ->
+                // 지도 가로 방향 이동 제스쳐 활성화 여부
                 ktmap.gestureSettings.horizontalPanEnabled = isChecked
             }
         }

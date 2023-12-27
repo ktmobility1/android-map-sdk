@@ -41,13 +41,21 @@ class RasterLayerActivity :
         }
     }
 
+    /**
+     * 래스터 지도 데이터 소스 초기화 및 생성
+     */
     private fun createSource() = RasterSource(
         options = RasterSourceProperties(
+            // 래스터 지도 타일 URL 설정
             RasterSourceProperties.Tiles(URLS),
+            // 래스터 지도 타일 크기 설정
             RasterSourceProperties.TileSize(256)
         )
     )
 
+    /**
+     * 데이터 소스를 통한 레이어 초기화 및 생성
+     */
     private fun createLayer(source: RasterSource) = LayerFactory.raster(source = source.id)
 
     override fun onMapReady(ktmap: KtMap) {
@@ -63,6 +71,9 @@ class RasterLayerActivity :
         initHueRotate()
     }
 
+    /**
+     * 레이어 투명도 조정을 위한 slider 초기화
+     */
     private fun initOpacity() {
         binding.opacitySlider.apply {
             value = layer.paint.rasterOpacity.value
@@ -72,6 +83,9 @@ class RasterLayerActivity :
         }
     }
 
+    /**
+     * 레이어 밝기 조정을 위한 slider 초기화
+     */
     private fun iniBrightness() {
         binding.brightnessMinSlider.apply {
             value = layer.paint.rasterBrightnessMin.value
@@ -87,6 +101,9 @@ class RasterLayerActivity :
         }
     }
 
+    /**
+     * 레이어 대비 조정을 위한 slider 초기화
+     */
     private fun initContrast() {
         binding.contrastSlider.apply {
             value = layer.paint.rasterContrast.value
@@ -96,6 +113,9 @@ class RasterLayerActivity :
         }
     }
 
+    /**
+     * 레이어 Saturation 조정을 위한 slider 초기화
+     */
     private fun initSaturation() {
         binding.saturationSlider.apply {
             value = layer.paint.rasterSaturation.value
@@ -105,6 +125,9 @@ class RasterLayerActivity :
         }
     }
 
+    /**
+     * 레이어 hue-rotate 조정을 위한 slider 초기화
+     */
     private fun initHueRotate() {
         binding.hueRotateSlider.apply {
             value = layer.paint.rasterHueRotate.value.toFloat()

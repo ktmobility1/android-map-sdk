@@ -21,7 +21,6 @@ class MoveCameraActivity :
     companion object {
         // 서울
         val START_OPTIONS = CameraPositionOptions(lngLat = LngLat(126.9778, 37.5722), zoom = 11f)
-
         // 인천 공항
         val END_OPTIONS = CameraPositionOptions(lngLat = LngLat(126.4513, 37.4493), zoom = 11f)
     }
@@ -63,6 +62,7 @@ class MoveCameraActivity :
                 initMap()
                 mapView.showSnackbar("camera init")
             } else {
+                // 지도 이동 animation type에 따라 지도를 이동시킨다.
                 when (selectedIndex) {
                     0 -> map.jumpTo(cameraOptions = END_OPTIONS)
                     1 -> map.easeTo(cameraOptions = END_OPTIONS, duration = 3000)

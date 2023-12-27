@@ -18,8 +18,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.geojson.Polygon
 
 class PatternFillLayerActivity :
-    BaseActivity<ActivityPatternFillLayerBinding>(R.layout.activity_pattern_fill_layer),
-    OnMapReadyCallback {
+    BaseActivity<ActivityPatternFillLayerBinding>(R.layout.activity_pattern_fill_layer), OnMapReadyCallback {
 
     private lateinit var map: KtMap
     private lateinit var mapView: MapView
@@ -65,12 +64,11 @@ class PatternFillLayerActivity :
                 )
             )
 
-            AppCompatResources.getDrawable(this@PatternFillLayerActivity, R.drawable.blackcat)
-                ?.let {
-                    addImage("pattern", drawable = it)
-                    addSource(source)
-                    addLayer(layer)
-                }
+            AppCompatResources.getDrawable(this@PatternFillLayerActivity, R.drawable.blackcat)?.let {
+                addImage("pattern", drawable = it)
+                addSource(source)
+                addLayer(layer)
+            }
         }
     }
 

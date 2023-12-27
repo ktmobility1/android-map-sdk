@@ -14,40 +14,42 @@ class MinMaxZoomActivity : BaseActivity<ActivityMinMaxZoomBinding>(R.layout.acti
 
     private lateinit var map: KtMap
     private lateinit var mapView: MapView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mapView = binding.map
-        mapView.onCreate(savedInstanceState)
-        mapView.getMapAsync(this)
+        mapView = binding.map.apply {
+            onCreate(savedInstanceState)
+            getMapAsync(this@MinMaxZoomActivity)
 
-        // set min/max zoom
-        mapView.mapOptions.maxZoom(15f)
-        mapView.mapOptions.minZoom(9f)
-
+            // 지도 최소/최대 줌 레벨 제한 설정
+            mapOptions.minZoom(9f)
+            mapOptions.maxZoom(15f)
+        }
     }
 
     override fun onMapReady(ktmap: KtMap) {
-        map = ktmap
+        map = ktmap.apply {
+            // 지도 카메라 변경에 대한 리스너를 등록한다.
+            addOnCameraChangedListener(
+                object : OnCameraChangeListener {
+                    override fun onCameraMoveStarted(reason: OnCameraChangeListener.REASON) {
+                        binding.zoomLevelText.text =
+                            getString(R.string.format_double, map.getCameraPosition().zoom)
+                    }
 
-        map.addOnCameraChangedListener(
-            object : OnCameraChangeListener {
-                override fun onCameraMoveStarted(reason: OnCameraChangeListener.REASON) {
-                    binding.zoomLevelText.text =
-                        getString(R.string.format_double, map.getCameraPosition().zoom)
-                }
+                    override fun onCameraMoveCanceled() {
+                        binding.zoomLevelText.text =
+                            getString(R.string.format_double, map.getCameraPosition().zoom)
+                    }
 
-                override fun onCameraMoveCanceled() {
-                    binding.zoomLevelText.text =
-                        getString(R.string.format_double, map.getCameraPosition().zoom)
+                    override fun onCameraMove() {
+                        binding.zoomLevelText.text =
+                            getString(R.string.format_double, map.getCameraPosition().zoom)
+                    }
                 }
-
-                override fun onCameraMove() {
-                    binding.zoomLevelText.text =
-                        getString(R.string.format_double, map.getCameraPosition().zoom)
-                }
-            }
-        )
+            )
+        }
     }
 
     override fun onStart() {

@@ -13,6 +13,7 @@ class NormalMapActivity : BaseActivity<ActivityNormalMapBinding>(R.layout.activi
     OnMapReadyCallback {
     private lateinit var map: KtMap
     private lateinit var mapView: MapView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -24,6 +25,7 @@ class NormalMapActivity : BaseActivity<ActivityNormalMapBinding>(R.layout.activi
 
     override fun onMapReady(ktmap: KtMap) {
         map = ktmap.apply {
+            // 지도 타입 기본으로 설정 - 명시적으로 지정하지 않아도 동일함
             setMapType(KtMapOptions.MapType.STREETS)
         }
     }

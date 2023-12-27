@@ -69,11 +69,6 @@
                 android:exported="false"
                 android:label="@string/max_pitch_activity_label"/>
         <activity
-                android:name=".example.interaction.MapExtentActivity"
-                android:description="@string/map_extent_label"
-                android:exported="false"
-                android:label="@string/map_extent_label"/>
-        <activity
                 android:name=".example.interaction.DoubleTapZoomHandlerActivity"
                 android:description="@string/double_tap_zoom_handler_description"
                 android:exported="false"

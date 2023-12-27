@@ -20,17 +20,17 @@ class OverlayEventActivity :
     OnMapReadyCallback {
 
     companion object {
-        private val MARKER_POSITION = LngLat(longitude = 126.97687, latitude = 37.57581)
+        private val MARKER_LNGLAT = LngLat(longitude = 126.97687, latitude = 37.57581)
         private val POLYGON_OVERLAY_LNGLATS = listOf(
             LngLat(latitude = 37.57217, longitude = 126.98077),
             LngLat(latitude = 37.56834, longitude = 126.98226),
-            LngLat(latitude = 37.57310, longitude = 126.98548),
+            LngLat(latitude = 37.57310, longitude = 126.98548)
         )
         private val POLYLINE_OVERLAY_LNGLATS = listOf(
             LngLat(latitude = 37.57069, longitude = 126.97365),
             LngLat(latitude = 37.56897, longitude = 126.97136),
             LngLat(latitude = 37.56872, longitude = 126.97534),
-            LngLat(latitude = 37.56742, longitude = 126.97164),
+            LngLat(latitude = 37.56742, longitude = 126.97164)
         )
     }
 
@@ -55,15 +55,18 @@ class OverlayEventActivity :
                 )
             )
 
+            // marker 오버레이 지도 추가
             val marker1 = addOverlay(
                 MarkerOptions.Builder().apply {
-                    position(MARKER_POSITION)
+                    position(MARKER_LNGLAT)
                     title("Marker")
-                    snippet("${MARKER_POSITION.longitude}, ${MARKER_POSITION.latitude} ")
+                    snippet("${MARKER_LNGLAT.longitude}, ${MARKER_LNGLAT.latitude} ")
                 }.build()
             )
+            // marker 오버레이 InfoWindow open
             selectMarker(marker1)
 
+            // Polyline 오버레이 지도 추가
             addOverlay(
                 PolylineOverlayOptions.Builder().apply {
                     lngLats(POLYLINE_OVERLAY_LNGLATS)
@@ -72,6 +75,7 @@ class OverlayEventActivity :
                 }.build()
             )
 
+            // Polygon 오버레이 지도 추가
             addOverlay(
                 PolygonOverlayOptions.Builder().apply {
                     lngLats(POLYGON_OVERLAY_LNGLATS)
@@ -79,28 +83,32 @@ class OverlayEventActivity :
                 }.build()
             )
 
+            // Marker 오버레이 Tap 이벤트 처리 리스너 등록
             setOnMarkerTapListener {
                 mapView.showSnackbar("Marker tapped (ID : ${it.id})")
                 false
             }
 
+            // Polyline 오버레이 Tap 이벤트 처리 리스너 등록
             setOnPolylineOverlayTapListener {
                 mapView.showSnackbar("PolylineOverlay tapped (ID : ${it.id})")
             }
 
+            // Polygon 오버레이 Tap 이벤트 처리 리스너 등록
             setOnPolygonOverlayTapListener {
                 mapView.showSnackbar("PolygonOverlay tapped (ID : ${it.id})")
             }
 
+            // InfoWindow Tap 이벤트 처리 리스너 등록
             setOnInfoWindowTapListener {
-                mapView.showSnackbar("InfoWindow tapped (ID : ${it.id})")
+                mapView.showSnackbar("InfoWindow tapped (marker ID : ${it.id})")
                 true
             }
 
+            // InfoWindow LongPress 이벤트 처리 리스너 등록
             setOnInfoWindowLongClickListener {
-                mapView.showSnackbar("InfoWindow Long Clicked (ID : ${it.id})")
+                mapView.showSnackbar("InfoWindow longPressed (marker ID : ${it.id})")
             }
-
         }
     }
 

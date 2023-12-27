@@ -68,12 +68,10 @@ class FitBoundsCameraActivity :
         initFab()
     }
 
-
     private fun color(key: String): Int = colorMap[key] ?: Color.GRAY
 
-
     /**
-     * 지도 초기 위치 이동
+     * 지도 설정 초기화
      */
     private fun initMap() {
         map.apply {
@@ -91,13 +89,15 @@ class FitBoundsCameraActivity :
         }
     }
 
+    /**
+     * 지도 위치 초기화
+     */
     private fun moveInitMap() {
-        // 지도 초기 위치 이동
         map.jumpTo(cameraOptions = START_OPTIONS)
     }
 
     /**
-     * 지도 이동 버튼 초기화
+     * 지도 영역 이동 하기 위한 버튼 초기화
      */
     private fun initFab() {
         binding.buttonCameraMove.setOnCheckedChangeListener { _, isChecked ->
@@ -122,7 +122,7 @@ class FitBoundsCameraActivity :
     }
 
     /**
-     * 지도 이동 영역 초기화
+     * 지도 영역 이동 초기화
      */
     private fun initSpinner() {
         // 지도 이동 animation 선택을 위한 Spinner

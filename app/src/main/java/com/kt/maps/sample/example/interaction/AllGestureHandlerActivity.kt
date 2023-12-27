@@ -15,20 +15,23 @@ class AllGestureHandlerActivity :
 
     private lateinit var map: KtMap
     private lateinit var mapView: MapView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mapView = binding.map
-        mapView.onCreate(savedInstanceState)
-        mapView.getMapAsync(this)
+        mapView = binding.map.apply {
+            onCreate(savedInstanceState)
+            getMapAsync(this@AllGestureHandlerActivity)
+        }
     }
 
     override fun onMapReady(ktmap: KtMap) {
-        map = ktmap
+        map = ktmap.apply {
+            // 모든 지도 제스쳐 활성화 허용
+            gestureSettings.allGestureEnabled = true
+        }
 
-        map.gestureSettings.allGestureEnabled = true
-
-        // 사용자 이벤트(move,tilt,rotate) 발생 시 맵에 활성화 시킬지 여부
+        // 사용자 이벤트(move,pitch,rotate) 발생 시 지도에 제스쳐를 활성화할 지 여부를 처리 하기 위한 리스너 등록
         // true는 활성화 false는 비활성화 상태입니다.
         binding.interactiveButton.setOnCheckedChangeListener { _, isChecked ->
             map.gestureSettings.allGestureEnabled = isChecked

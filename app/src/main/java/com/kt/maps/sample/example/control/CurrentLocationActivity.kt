@@ -50,7 +50,7 @@ class CurrentLocationActivity :
 
         var defaultBottomMargin = map.currentLocation.marginBottom
         var defaultLeftMargin = map.currentLocation.marginLeft
-        if (binding.currentLocationMargin.isChecked) {
+        if(binding.currentLocationMargin.isChecked) {
             defaultBottomMargin /= 2
             defaultLeftMargin /= 2
         }

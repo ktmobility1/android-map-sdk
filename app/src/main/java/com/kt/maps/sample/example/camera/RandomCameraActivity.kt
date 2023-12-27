@@ -33,7 +33,7 @@ class RandomCameraActivity :
     override fun onMapReady(ktmap: KtMap) {
         map = ktmap
 
-        // 줌 변경 버튼 탭 핸들러
+        // 지도 줌 레벨 변경 버튼 탭 핸들러
         binding.buttonCameraZoom.setOnClickListener {
             val zoom = random(6f, 20f) // 6과 20 사이 랜덤 숫자 생성
 
@@ -43,7 +43,7 @@ class RandomCameraActivity :
             mapView.showSnackbar(R.string.changed_camera_zoom, zoom)
         }
 
-        // 중심점  변경 버튼 탭 핸들러
+        // 지도 중심점 변경 버튼 탭 핸들러
         binding.buttonCameraCenter.setOnClickListener {
             val lng = random(127f, 128f) // 경도 - 127과 128 사이 랜덤 숫자 생성
             val lat = random(35f, 37f) // 위도 - 35와 37 사이 랜덤 숫자 생성

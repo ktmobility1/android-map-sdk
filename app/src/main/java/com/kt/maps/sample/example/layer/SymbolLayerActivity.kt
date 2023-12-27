@@ -84,6 +84,7 @@ class SymbolLayerActivity :
 
     override fun onMapReady(ktmap: KtMap) {
         map = ktmap.apply {
+            // 지도 초기화 위치 이동
             jumpTo(
                 cameraOptions = CameraPositionOptions().zoom(16f).lngLat(
                     LngLat(longitude = 127.029414, latitude = 37.471401)
@@ -106,23 +107,37 @@ class SymbolLayerActivity :
         }
     }
 
+    /**
+     * GEOJSON 데이터 소스 초기화 및 생성
+     */
     private fun createSource() = GeojsonSource(features = FeatureCollection.fromFeatures(FEATURES))
+
+    /**
+     * 데이터 소스를 통해 레이어 초기화 및 생성
+     */
     private fun createLayer(source: GeojsonSource) = LayerFactory.symbol(source = source.id)
         .paint(
+            // 아이콘 투명도 설정
             SymbolStylePaints(iconStylePaints = SymbolIconStylePaints(IconOpacity(0.9f)))
         )
         .layout(
             SymbolStyleLayouts(
                 iconStyleLayouts = SymbolIconStyleLayouts(
+                    // 아이콘 이미지 설정
                     IconImage("symbolDrawable"),
+                    // 아이콘 이미지 크기 설정
                     IconSize(0.2f)
                 ),
                 textStyleLayouts = SymbolTextStyleLayouts(
+                    // 텍스트를 표출하기 위한 필드명 지정
                     SymbolTextStyleLayouts.TextFieldName(TITLE_FEATURE_PROPERTY),
                 )
             )
         )
 
+    /**
+     * 레이어 투명도 조정을 위한 slider 초기화
+     */
     private fun initOpacity() {
         binding.iconOpacitySlider.apply {
             value = layer.paint.iconStylePaints.iconOpacity.value
@@ -141,7 +156,11 @@ class SymbolLayerActivity :
     }
 
 
+    /**
+     * 레이어 방향 조정을 위한 slider 초기화
+     */
     private fun initRotate() {
+        // 아이콘 방향 조정을 위한 slider
         binding.iconRotateSlider.apply {
             value = layer.layout.iconStyleLayouts.iconRotate.value.toFloat()
 
@@ -151,6 +170,7 @@ class SymbolLayerActivity :
                 )
             }
         }
+        // 텍스트 방향 조정을 위한 slider
         binding.textRotateSlider.apply {
             value = layer.layout.textStyleLayouts.textRotate.value.toFloat()
 
@@ -162,6 +182,9 @@ class SymbolLayerActivity :
         }
     }
 
+    /**
+     * 레이어내 심볼(아이콘,텍스트) 겹침때 항상 허용 여부 조정을 위한 switch 초기화
+     */
     private fun initAllowOverlap() {
         binding.iconAllowOverlap.apply {
             isChecked = layer.layout.iconStyleLayouts.iconAllowOverlap.value
@@ -179,6 +202,9 @@ class SymbolLayerActivity :
         }
     }
 
+    /**
+     * 레이어 다른 심볼(아이콘, 텍스트)로 겹칠 때 둘다 표시 여부 설정하기 위한 switch 초기화
+     */
     private fun initIgnorePlacement() {
         binding.iconIgnorePlacement.apply {
             isChecked = layer.layout.iconStyleLayouts.iconIgnorePlacement.value
@@ -196,12 +222,9 @@ class SymbolLayerActivity :
         }
     }
 
-    private fun initIconRotationAlignment() {
-    }
-
-    private fun initIconPitchAlignment() {
-    }
-
+    /**
+     * 레이어 아이콘 anchor type 선택하기 위한 spinner 초기화
+     */
     private fun initAnchor() {
         binding.iconAnchorSpinner.apply {
             adapter = ArrayAdapter(
@@ -232,6 +255,9 @@ class SymbolLayerActivity :
         }
     }
 
+    /**
+     * 레이어 심볼 크기 조정을 위한 slider 초기화
+     */
     private fun initSize() {
         binding.iconSizeSlider.apply {
             value = layer.layout.iconStyleLayouts.iconSize.value
@@ -253,6 +279,9 @@ class SymbolLayerActivity :
         }
     }
 
+    /**
+     * spinner item 설정 처리를 위한 리스너
+     */
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
         when (parent) {

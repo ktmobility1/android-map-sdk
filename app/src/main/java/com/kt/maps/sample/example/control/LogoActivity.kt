@@ -44,7 +44,7 @@ class LogoActivity : BaseActivity<ActivityLogoBinding>(R.layout.activity_logo), 
 
         var defaultBottomMargin = map.logo.marginBottom
         var defaultRightMargin = map.logo.marginRight
-        if (binding.logoMargin.isChecked) {
+        if(binding.logoMargin.isChecked) {
             defaultBottomMargin /= 2
             defaultRightMargin /= 2
         }

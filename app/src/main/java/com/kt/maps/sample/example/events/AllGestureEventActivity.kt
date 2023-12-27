@@ -33,20 +33,25 @@ class AllGestureEventActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mapView = binding.map.apply { }
-        mapView.onCreate(savedInstanceState)
-        mapView.getMapAsync(this)
+        mapView = binding.map.apply {
+            onCreate(savedInstanceState)
+            getMapAsync(this@AllGestureEventActivity)
+        }
 
-        binding.alertsRecycler.layoutManager = LinearLayoutManager(this)
-        binding.alertsRecycler.adapter = gestureAlertsAdapter
+        binding.alertsRecycler.apply {
+            layoutManager = LinearLayoutManager(this@AllGestureEventActivity)
+            adapter = gestureAlertsAdapter
+        }
     }
 
     override fun onMapReady(ktmap: KtMap) {
         map = ktmap
 
-        val layoutParams = binding.alertsRecycler.layoutParams as ConstraintLayout.LayoutParams
-        layoutParams.height = (binding.map.height / 6.80).toInt()
-        layoutParams.width = binding.map.width
+        val layoutParams =
+            (binding.alertsRecycler.layoutParams as ConstraintLayout.LayoutParams).apply {
+                height = (binding.map.height / 6.80).toInt()
+                width = binding.map.width
+            }
         binding.alertsRecycler.layoutParams = layoutParams
 
         attachListeners()

@@ -36,8 +36,6 @@
     <string name="gesture_camera_description">Change map zoom, pitch, bearing</string>
     <string name="map_tap_event_activity_label">Map Tap Event</string>
     <string name="map_tap_event_activity_description">Tap and Longpress events on Map</string>
-    <string name="map_extent_label">Map Extent</string>
-    <string name="map_extent_description">Map Extent</string>
     <string name="min_max_zoom_activity_label">Min/Max Zoom</string>
     <string name="min_max_zoom_activity_description">Min/Max Zoom</string>
     <string name="max_pitch_activity_label">Max Pitch</string>

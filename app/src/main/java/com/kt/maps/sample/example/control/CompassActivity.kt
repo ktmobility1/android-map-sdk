@@ -43,9 +43,9 @@ class CompassActivity : BaseActivity<ActivityCompassBinding>(R.layout.activity_c
             panControls.enabled = false
         }
 
-        val defaultMargin = if (binding.compassMargin.isChecked) {
+        val defaultMargin = if(binding.compassMargin.isChecked) {
             map.compass.marginTop / 5
-        } else {
+        }else {
             map.compass.marginTop
         }
 

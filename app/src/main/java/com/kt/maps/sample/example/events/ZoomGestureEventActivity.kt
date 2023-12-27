@@ -22,27 +22,33 @@ class ZoomGestureEventActivity :
     OnMapReadyCallback {
 
     private lateinit var map: KtMap
-    private val gestureAlertsAdapter: GestureAlertsAdapter = GestureAlertsAdapter()
     private lateinit var mapView: MapView
+    private val gestureAlertsAdapter: GestureAlertsAdapter = GestureAlertsAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mapView = binding.map
-        mapView.onCreate(savedInstanceState)
-        mapView.getMapAsync(this)
+        mapView = binding.map.apply {
+            onCreate(savedInstanceState)
+            getMapAsync(this@ZoomGestureEventActivity)
+        }
 
-        binding.alertsRecycler.layoutManager = LinearLayoutManager(this)
-        binding.alertsRecycler.adapter = gestureAlertsAdapter
+        binding.alertsRecycler.apply {
+            layoutManager = LinearLayoutManager(this@ZoomGestureEventActivity)
+            adapter = gestureAlertsAdapter
+        }
     }
 
     override fun onMapReady(ktmap: KtMap) {
-        map = ktmap
-        map.zoomControls.enabled = false
+        map = ktmap.apply {
+            zoomControls.enabled = false
+        }
 
-        val layoutParams = binding.alertsRecycler.layoutParams as ConstraintLayout.LayoutParams
-        layoutParams.height = (binding.map.height / 6.80).toInt()
-        layoutParams.width = binding.map.width
+        val layoutParams =
+            (binding.alertsRecycler.layoutParams as ConstraintLayout.LayoutParams).apply {
+                height = (binding.map.height / 6.80).toInt()
+                width = binding.map.width
+            }
         binding.alertsRecycler.layoutParams = layoutParams
 
         attachListeners()
