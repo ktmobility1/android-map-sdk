@@ -21,21 +21,22 @@ class AnimateLineActivity :
     private lateinit var map: KtMap
     private lateinit var mapView: MapView
     private var animator: ValueAnimator? = null
-    val POLYLINE_OVERLAY_LNGLATS = mutableListOf<LngLat>()
+    private val lngLats = mutableListOf<LngLat>()
 
     // kt연구개발센터 사옥
     private var current = LngLat(127.029414, 37.471401)
 
     // kt광화문 사옥
-    private var destination = LngLat(126.978916, 37.572020)
+    private val destination = LngLat(126.978916, 37.572020)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mapView = binding.map
-        mapView.onCreate(savedInstanceState)
-        mapView.getMapAsync(this)
+        mapView = binding.map.apply {
+            onCreate(savedInstanceState)
+            getMapAsync(this@AnimateLineActivity)
+        }
     }
 
     override fun onMapReady(ktmap: KtMap) {
@@ -69,10 +70,10 @@ class AnimateLineActivity :
                 addUpdateListener {
                     val updateValue = it.animatedValue as LngLat
 
-                    POLYLINE_OVERLAY_LNGLATS.add(updateValue)
+                    lngLats.add(updateValue)
 
                     map.addOverlay(PolylineOverlayOptions.Builder().apply {
-                        lngLats(POLYLINE_OVERLAY_LNGLATS)
+                        lngLats(lngLats)
                         color(Color.RED)
                         width(10f)
                         opacity(0.2f)
@@ -113,5 +114,4 @@ class AnimateLineActivity :
         super.onDestroy()
         mapView.onDestroy()
     }
-
 }

@@ -25,16 +25,14 @@ class AnimateMapCameraActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mapView = binding.map
-        mapView.onCreate(savedInstanceState)
-        mapView.getMapAsync(this)
+        mapView = binding.map.apply {
+            onCreate(savedInstanceState)
+            getMapAsync(this@AnimateMapCameraActivity)
+        }
     }
 
     override fun onMapReady(ktmap: KtMap) {
-        map = ktmap
-
-        map.apply {
-
+        map = ktmap.apply {
             jumpTo(
                 cameraOptions = CameraPositionOptions(
                     zoom = 17f,
@@ -42,7 +40,7 @@ class AnimateMapCameraActivity :
                     lngLat = LngLat(longitude = 127.029414, latitude = 37.471401)
                 )
             )
-
+            animator?.cancel()
             animator = ValueAnimator().apply {
                 setObjectValues(0f, 360f)
                 interpolator = LinearInterpolator()
@@ -50,13 +48,12 @@ class AnimateMapCameraActivity :
                 addUpdateListener {
                     val updateValue = it.animatedValue as Float
                     map.jumpTo(
-                        cameraOptions = CameraPositionOptions().bearing((updateValue))
+                        cameraOptions = CameraPositionOptions().bearing(updateValue)
                     )
                 }
                 duration = 20000
                 start()
             }
-
         }
     }
 

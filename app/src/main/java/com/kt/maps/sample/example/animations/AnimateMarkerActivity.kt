@@ -29,16 +29,14 @@ class AnimateMarkerActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mapView = binding.map
-        mapView.onCreate(savedInstanceState)
-        mapView.getMapAsync(this)
+        mapView = binding.map.apply {
+            onCreate(savedInstanceState)
+            getMapAsync(this@AnimateMarkerActivity)
+        }
     }
 
     override fun onMapReady(ktmap: KtMap) {
-        map = ktmap
-
-        map.apply {
-
+        map = ktmap.apply {
             addOnMapTapListener(this@AnimateMarkerActivity)
 
             jumpTo(cameraOptions = CameraPositionOptions().zoom(16f).lngLat(currentPoint))
@@ -50,7 +48,6 @@ class AnimateMarkerActivity :
                     snippet("${currentPoint.longitude}, ${currentPoint.latitude}")
                 }.build()
             )
-
         }
     }
 
@@ -74,7 +71,7 @@ class AnimateMarkerActivity :
             setEvaluator(pointEvaluator)
             addUpdateListener {
                 val updateValue = it.animatedValue as LngLat
-                marker?.position = LngLat(updateValue.longitude, updateValue.latitude)
+                marker?.position = updateValue
             }
             duration = 1000
             start()

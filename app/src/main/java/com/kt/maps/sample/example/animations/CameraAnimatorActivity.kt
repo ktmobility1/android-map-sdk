@@ -44,9 +44,7 @@ class CameraAnimatorActivity :
     }
 
     override fun onMapReady(ktmap: KtMap) {
-        map = ktmap
-
-        map.apply {
+        map = ktmap.apply {
             jumpTo(
                 cameraOptions = CameraPositionOptions(
                     lngLat = LngLat(longitude = 126.97794, latitude = 37.57103),
@@ -57,7 +55,6 @@ class CameraAnimatorActivity :
     }
 
     private fun initFab() {
-
         binding.fab.setOnClickListener { _ ->
             when (cameraMoving) {
                 CameraMoving.MOVE_TO -> createLatLngAnimator(
@@ -88,7 +85,6 @@ class CameraAnimatorActivity :
     }
 
     private fun initSpinner() {
-
         ArrayAdapter.createFromResource(
             this,
             R.array.interpolate_array,
@@ -111,7 +107,6 @@ class CameraAnimatorActivity :
     }
 
     override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
-
         if (parent.id == binding.interpolateSpinner.id) {
             when (pos) {
                 0 -> interpolator = AccelerateDecelerateInterpolator()
@@ -159,8 +154,8 @@ class CameraAnimatorActivity :
     }
 
     private fun createZoomAnimator(
-        currentZoom: Double,
-        targetZoom: Double,
+        currentZoom: Float,
+        targetZoom: Float,
         interpolator: TimeInterpolator
     ): Animator {
         val zoomAnimator = ValueAnimator.ofFloat(currentZoom.toFloat(), targetZoom.toFloat())
@@ -173,12 +168,12 @@ class CameraAnimatorActivity :
     }
 
     private fun createBearingAnimator(
-        currentBearing: Double,
-        targetBearing: Double,
+        currentBearing: Float,
+        targetBearing: Float,
         interpolator: TimeInterpolator
     ): Animator {
         val bearingAnimator =
-            ValueAnimator.ofFloat(currentBearing.toFloat(), targetBearing.toFloat())
+            ValueAnimator.ofFloat(currentBearing, targetBearing)
         bearingAnimator.duration = ANIMATION_DURATION.toLong()
         bearingAnimator.interpolator = interpolator
         bearingAnimator.addUpdateListener { animation: ValueAnimator ->
@@ -188,11 +183,11 @@ class CameraAnimatorActivity :
     }
 
     private fun createPitchAnimator(
-        currentPitch: Double,
-        targetPitch: Double,
+        currentPitch: Float,
+        targetPitch: Float,
         interpolator: TimeInterpolator
     ): Animator {
-        val pitchAnimator = ValueAnimator.ofFloat(currentPitch.toFloat(), targetPitch.toFloat())
+        val pitchAnimator = ValueAnimator.ofFloat(currentPitch, targetPitch)
         pitchAnimator.duration = ANIMATION_DURATION.toLong()
         pitchAnimator.interpolator = interpolator
         pitchAnimator.addUpdateListener { animation: ValueAnimator ->
@@ -235,17 +230,15 @@ class CameraAnimatorActivity :
         private const val ANIMATION_DURATION = 3000
         private val START_POSITION = LngLat(longitude = 126.97794, latitude = 37.57103)
         private val TO_POSITION = LngLat(longitude = 127.02936, latitude = 37.47123)
-        private const val START_ZOOM = 10.0
-        private const val TO_ZOOM = 15.0
-        private const val START_PITCH = 0.0
-        private const val TO_PITCH = 60.0
-        private const val START_BEARING = 0.0
-        private const val TO_BEARING = 360.0
+        private const val START_ZOOM = 10f
+        private const val TO_ZOOM = 15f
+        private const val START_PITCH = 0f
+        private const val TO_PITCH = 60f
+        private const val START_BEARING = 0f
+        private const val TO_BEARING = 360f
     }
 
     enum class CameraMoving {
         MOVE_TO, ZOOM_TO, PITCH_TO, BEARING_TO
     }
-
-
 }
